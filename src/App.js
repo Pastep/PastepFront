@@ -10,9 +10,8 @@ import {
 function App() {
   return (
     <div>
-      <h1>Hello Pastep!</h1>
       <Router>
-        <Route path='/' exact><h1>HomePage</h1></Route>
+        <Route path='/' exact><h1>خانه</h1></Route>
       </Router>
     </div>
   );
