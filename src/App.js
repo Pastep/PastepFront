@@ -6,14 +6,15 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
+import Home from './pages/home'
+import Nav from './components/nav'
 
 function App() {
   return (
-    <div>
-      <Router>
-        <Route path='/' exact><h1>خانه</h1></Route>
-      </Router>
-    </div>
+    <Router>
+      <Nav />
+      <Route path='/' exact component={Home}></Route>
+    </Router>
   );
 }
 
