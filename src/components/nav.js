@@ -9,7 +9,7 @@ function Nav() {
                 <a href="#">خانه</a>
                  <a href="#">محبوب ترین ها</a>
                  <a href="#">تیم ها</a>
-                 <a href="#">سازندگان</a>
+                 <a href="#">سانز</a>
             </div>
             <div className='navbar-left'>
                 <a className='nav-button' href="#">پیست جدید</a>
