@@ -3,6 +3,7 @@ import bell from '../images/bell.svg'
 import search from '../images/search.svg'
 
 function Nav() {
+    //comment
     return(
         <div className='navbar'>
             <div className='navbar-right'>
