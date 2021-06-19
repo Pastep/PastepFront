@@ -9,6 +9,15 @@ export type NavBarProps = {
   routes: Array<RouteView>;
 };
 
+export type PasteProps = {
+  userName: string;
+  userLocation: string;
+  profilePic: string;
+  code: string;
+  title: string;
+  description: string;
+};
+
 // -- Interfaces --
 
 export interface RouteView {
