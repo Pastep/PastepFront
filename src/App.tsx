@@ -1,37 +1,55 @@
 import "./App.scss";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-} from "react-router-dom";
-import Home from "./pages/home";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Home } from "./components/Home";
 import { NavBar } from "./components/NavBar";
-import { routes } from "./routing";
 import "./styles/global/base.scss";
+import { Dispatcher, UserState } from "./types";
+import { useEffect } from "react";
+import { useState } from "react";
+import { BestRating } from "./components/BestRating";
+import { Team } from "./components/Team";
 
-function App() {
-  var routeComponents = [];
-  for (let i = 0; i < routes.length; i++) {
-    routeComponents.push(
-      <Route
-        path={routes[i].acceptPaths || routes[i].destination}
-        exact
-        key={i}
-      >
-        {routes[i].component}
-      </Route>
-    );
-  }
+function GuestState() {
   return (
     <Router>
-      <NavBar routes={routes} />
+      <NavBar userState={UserState.Guest} />
       <div className="content__wrapper">
-        <Switch>{routeComponents}</Switch>
+        <Route path={["/", "/home", "/index"]} exact component={Home} />
+        <Route path="/best-rating" exact component={BestRating} />
+        <Route path="/team" exact component={Team} />
+        <Route path="/login" exact component={Home} />
+        <Route path="/register" exact component={Home} />
       </div>
     </Router>
   );
+}
+
+function LoggedState() {
+  return (
+    <Router>
+      <NavBar userState={UserState.Logged} />
+      <div className="content__wrapper">
+        <Route path={["/", "/home", "/index"]} exact component={Home} />
+        <Route path="/best-rating" exact component={BestRating} />
+        <Route path="/team" exact component={Team} />
+      </div>
+    </Router>
+  );
+}
+
+const dispatcher: Dispatcher = {
+  [UserState.Guest]: <GuestState />,
+  [UserState.Logged]: <LoggedState />,
+};
+
+function App() {
+  const [userState, setUserState] = useState(UserState.Guest);
+  useEffect(() => {
+    // TODO: Use fetch classes later
+    setUserState(UserState.Logged);
+  }, []);
+
+  return dispatcher[userState];
 }
 
 export default App;

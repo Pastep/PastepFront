@@ -1,31 +1,40 @@
 import { Link } from "react-router-dom";
-import { routes } from "../routing";
+import { NavBarProps, UserState } from "../types";
 import "../styles/global/navbar.scss";
-import { NavBarProps } from "../types";
 
 export function NavBar(props: NavBarProps) {
-  var linkComponents = [];
-  for (let i = 0; i < props.routes.length; i++) {
-    linkComponents.push(
-      <Link to={routes[i].destination} key={i}>
-        {routes[i].text}
-      </Link>
-    );
-  }
   return (
     <div className="navbar">
-      <div className="navbar__navigation">{linkComponents}</div>
+      {props.userState === UserState.Guest ? <NavBarGuest /> : <NavBarLogged />}
       <div className="navbar__features">
-        <a className="navbar__new-paste" href="#">
-          پیست جدید
-        </a>
-        <img width="50px" height="50px" src="./images/werdox.png"></img>
-        <img width="24px" height="24px" src="./images/bell.svg"></img>
-        <div className="navbar__search">
-          <img width="25px" height="25px" src="./images/search.svg"></img>
+        <button className="features__new-paste">پیست جدید</button>
+        <img width="50px" height="50px" src="./images/werdox.png" alt="" />
+        <img width="24px" height="24px" src="./images/bell.svg" alt="" />
+        <div className="features__search">
+          <img width="25px" height="25px" src="./images/search.svg" alt="" />
           <input placeholder="چیزی را تایپ کنید"></input>
         </div>
       </div>
+    </div>
+  );
+}
+
+function NavBarGuest() {
+  return (
+    <div className="navbar__navigation">
+      <Link to="/">خانه</Link>
+      <Link to="/best-rating">محبوب ترین ها</Link>
+      <Link to="/team">تیم ما</Link>
+    </div>
+  );
+}
+
+function NavBarLogged() {
+  return (
+    <div className="navbar__navigation">
+      <Link to="/">خانه</Link>
+      <Link to="/best-rating">محبوب ترین ها</Link>
+      <Link to="/team">تیم ما</Link>
     </div>
   );
 }

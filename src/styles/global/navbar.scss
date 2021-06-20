@@ -10,7 +10,7 @@
     direction: ltr !important;
     gap: 0 20px;
 
-    a {
+    .features__new-paste {
       text-decoration: none;
       font-size: 1rem;
       background-color: #24a3d9;
@@ -21,6 +21,8 @@
       justify-content: center;
       border-radius: 9px;
       transition: all 0.125s;
+      border: 0;
+      outline: none;
 
       &:hover {
         background-color: #1f8dbd;
@@ -39,7 +41,7 @@
     }
   }
 
-  .navbar__search {
+  .features__search {
     display: flex;
     align-items: center;
     direction: rtl !important;

@@ -1,12 +1,17 @@
-import React from "react";
-
 // All types/interfaces/enums will be stored here
+
+// -- Enums --
+
+export enum UserState {
+  Logged = "LOGGED",
+  Guest = "GUEST",
+}
 
 // -- Types --
 
 // Navbar
 export type NavBarProps = {
-  routes: Array<RouteView>;
+  userState: UserState;
 };
 
 export type PasteProps = {
@@ -20,18 +25,7 @@ export type PasteProps = {
 
 // -- Interfaces --
 
-export interface RouteView {
-  text: string;
-  destination: string;
-  acceptPaths?: string | string[];
-  component: React.ReactNode;
-  requiredState: RequiredUserState;
-}
-
-// -- Enums --
-
-export enum RequiredUserState {
-  All = "ALL",
-  Logged = "LOGGED",
-  Guest = "GUEST",
+export interface Dispatcher {
+  [UserState.Guest]: JSX.Element;
+  [UserState.Logged]: JSX.Element;
 }

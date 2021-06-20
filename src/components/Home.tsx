@@ -1,4 +1,3 @@
-import React from "react";
 import "../styles/global/home.scss";
 
 import { Paste } from "./Paste";
@@ -20,7 +19,7 @@ export function Home() {
             userName="Werdox"
             userLocation="شیراز | ایران"
             profilePic="./images/werdox.png"
-            code="class mamad extends jafar.component class mamad extends jafar.component class mamad extends jafar.componentfffffffffffffffffffffffffff"
+            code="class mamad extends jafar.component class mamad extends jafar.component class mamad extends jafar.component"
             title="یک کلاس در تایپ اسکریپت"
             description="پرنده ها بال میزنند و آسمان را تماشا میکنند. ناگهان پرنده ای پر
             میزند و دیگر آسمان را تماشا نمیکند!"
