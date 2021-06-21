@@ -11,6 +11,7 @@
     gap: 0 20px;
 
     .features__new-paste {
+      cursor: pointer;
       text-decoration: none;
       font-size: 1rem;
       background-color: #24a3d9;
@@ -38,6 +39,45 @@
     img {
       border-radius: 50%;
       cursor: pointer;
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      background-color: white;
+      color: white;
+      top: 85px;
+      left: 95px;
+      box-shadow: 0px 4px 23px 4px rgba(150, 150, 150, 0.4);
+      border-radius: 10px;
+      animation: profile-pupup 0.25s ease;
+
+      .profile-dropdown__wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        gap: 2px 0;
+
+        .profile-dropdown__item {
+          padding: 5px;
+          text-align: right;
+          font-size: 15px;
+          cursor: pointer;
+          border-radius: 5px;
+          transition: all 0.125s;
+
+          a {
+            padding: 0 5px;
+            text-decoration: none;
+            color: #1d1d1d;
+            width: 100%;
+            display: inline-block;
+          }
+
+          &:hover {
+            background-color: whitesmoke;
+          }
+        }
+      }
     }
   }
 
@@ -71,5 +111,16 @@
       font-size: 1rem;
       margin-left: 20px;
     }
+  }
+}
+
+@keyframes profile-pupup {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
   }
 }

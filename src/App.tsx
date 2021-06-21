@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { BestRating } from "./components/BestRating";
 import { Team } from "./components/Team";
+import { Profile } from "./components/Profile";
 
 function GuestState() {
   return (
@@ -32,6 +33,7 @@ function LoggedState() {
         <Route path={["/", "/home", "/index"]} exact component={Home} />
         <Route path="/best-rating" exact component={BestRating} />
         <Route path="/team" exact component={Team} />
+        <Route path="/profile" exact component={Profile} />
       </div>
     </Router>
   );
