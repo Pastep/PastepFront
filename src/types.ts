@@ -23,6 +23,12 @@ export type PasteProps = {
   description: string;
 };
 
+export type ProjectProps = {
+  type: string;
+  title: string;
+  picture: string;
+};
+
 // -- Interfaces --
 
 export interface Dispatcher {
