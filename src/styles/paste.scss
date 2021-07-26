@@ -1,0 +1,117 @@
+.paste {
+  border: var(--paste-border) 1px solid;
+  background-color: var(--background);
+  border-radius: 35px;
+  transition: 0.5s;
+  width: 420px;
+
+  .paste__wrapper {
+    padding: 30px;
+
+    .paste__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .header__profile-info {
+        display: flex;
+        gap: 0 10px;
+
+        img {
+          border-radius: 100%;
+        }
+      }
+
+      .header__more-info {
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 1rem;
+        background-color: var(--button);
+        color: white;
+        padding: 10px 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9px;
+        transition: all 0.125s;
+        border: 0;
+        outline: none;
+
+        &:hover {
+          background-color: var(--button-hover);
+          transform: scale(1.05);
+        }
+
+        &:active {
+          background-color: var(--button);
+          transform: scale(1);
+        }
+      }
+    }
+
+    .paste__code {
+      margin-top: 20px;
+
+      .code {
+        * {
+          font-family: "Roboto Mono" !important;
+          font-size: 13px;
+        }
+
+        // text-align: left;
+        direction: ltr;
+        background-color: var(--code-background);
+        box-shadow: 0px 4px 23px 4px var(--profile-drop-down-background-shadow);
+        transition: 0.5s;
+        border-radius: 18px;
+        height: 180px;
+
+        .code__wrapper {
+          padding: 20px;
+          display: flex;
+          // justify-content: center;
+          height: 100%;
+
+          .code__wrapper2 {
+            height: 100%;
+            background-color: transparent !important;
+          }
+        }
+      }
+
+      .code__features {
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+
+        svg, img {
+          cursor: pointer;
+          transition: all 0.115s;
+          stroke: var(--text);
+
+          &:hover {
+            transform: scale(1.1);
+          }
+
+          &:active {
+            transform: scale(1);
+          }
+        }
+
+        .features__right svg, img {
+          margin-left: 10px;
+        }
+      }
+    }
+
+    .paste__footer {
+      padding: 10px;
+
+      .footer__description {
+        margin-top: 10px;
+        font-size: 0.9rem;
+        color: var(--text-muted2);
+      }
+    }
+  }
+}

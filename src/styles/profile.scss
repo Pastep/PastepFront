@@ -1,0 +1,131 @@
+.profile {
+    margin-top: 50px;
+    .profile__wrapper {
+        padding: 0 80px;
+        .profile__header {
+            display: flex;
+            justify-content: space-between;
+            .header__right {
+                display: flex;
+                align-items: center;
+                img {
+                    border-radius: 100%;
+                }
+                .right__info {
+                    margin-right: 20px;
+                    .name__wrapper {
+                        display: flex;
+                        align-items: center;
+                        h2 {
+                            color: var(--text);
+                            margin-bottom: 5px;
+                            font-size: 28px;
+                        }
+                        .badges {
+                            display: flex;
+                            margin-right: 10px;
+                            .badges__wrapper {
+                                padding: 10px;
+                                .badge {
+                                    border-radius: 5px;
+                                    padding: 5px 20px;
+                                    h4 {
+                                        font-size: 13px;
+                                    }
+                                }
+                                .badge--purple {
+                                    background-color: var(--badge-purple);
+                                    h4 {
+                                        color: var(--badge-purple-text);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    h3 {
+                        color: var(--text-muted2);
+                        font-size: 18px;
+                    }
+                }
+            }
+            .header__left {
+                display: flex;
+                align-items: center;
+                .left__follow {
+                    cursor: pointer;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    background-color: var(--button);
+                    color: white;
+                    padding: 10px 25px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 9px;
+                    transition: all 0.125s;
+                    border: 0;
+                    outline: none;
+                    &:hover {
+                        background-color: var(--button-hover);
+                        transform: scale(1.05);
+                    }
+                    &:active {
+                        background-color: var(--button);
+                        transform: scale(1);
+                    }
+                }
+                .left__followers {
+                    margin-left: 10px;
+                    display: flex;
+                    align-items: center;
+                    gap: 0 5px;
+                    img {
+                        border-radius: 100%;
+                        cursor: pointer;
+                    }
+                    .followers__count {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+        .profile__sections {
+            margin-top: 60px;
+            margin-right: 10px;
+            .sections__wrapper {
+                display: flex;
+                gap: 0 20px;
+                padding: 10px;
+                .section {
+                    font-size: 16px;
+                    color: var(--text-muted);
+                    transition: all 0.125s;
+                    cursor: pointer;
+                    &:hover {
+                        color: var(--text);
+                    }
+                }
+                .section--selected {
+                    color: var(--text);
+                }
+            }
+            .sections__divider {
+                margin-top: 10px;
+                margin-right: 10px;
+                border: 1px solid rgba(154, 154, 154, 0.3);
+            }
+        }
+        .profile__pastes {
+            margin-top: 80px;
+            .pastes__wrapper {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                //gap: 60px 60px;
+                >div {
+                    margin-bottom: 50px;
+                }
+            }
+        }
+    }
+}

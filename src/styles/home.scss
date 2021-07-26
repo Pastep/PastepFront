@@ -1,0 +1,25 @@
+.code-type__wrapper {
+    gap: 0 20px;
+    .code-type__item {
+        padding: 10px 30px;
+        border-radius: 10px;
+        cursor: pointer;
+        &:hover {
+            background-color: var(--home-item-background);
+        }
+    }
+    .selected {
+        background-color: var(--home-item-background);
+    }
+}
+
+.pastes {
+    margin-top: 60px;
+    // padding: 0 100px;
+    .pastes__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 60px 60px;
+    }
+}

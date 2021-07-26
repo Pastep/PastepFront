@@ -1,0 +1,167 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    .navbar__features {
+        display: flex;
+        align-items: center;
+        direction: ltr !important;
+        gap: 0 20px;
+
+        .features__new-paste {
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1rem;
+            background-color: var(--button);
+            color: white;
+            padding: 10px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9px;
+            transition: all 0.125s;
+            border: 0;
+            outline: none;
+
+            &:hover {
+                background-color: var(--button-hover);
+                transform: scale(1.05);
+            }
+
+            &:active {
+                background-color: var(--button-hover);
+                transform: scale(1);
+            }
+        }
+        img {
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .profile-dropdown {
+            position: absolute;
+            background-color: var(--profile-drop-down-background);
+            color: var(--text);
+            top: 85px;
+            left: 135px;
+            box-shadow: 0px 4px 23px 4px var(--profile-drop-down-background-shadow);
+            border-radius: 10px;
+            animation: profile-pupup 0.25s ease;
+            z-index: 10000000000;
+            .profile-dropdown__wrapper {
+                display: flex;
+                flex-direction: column;
+                padding: 15px;
+                gap: 2px 0;
+                .profile-dropdown__item {
+                    padding: 5px;
+                    text-align: right;
+                    font-size: 15px;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    transition: all 0.125s;
+                    a {
+                        padding: 0 5px;
+                        text-decoration: none;
+                        color: var(--text);
+                        width: 100%;
+                        display: inline-block;
+                    }
+                    &:hover {
+                        background-color: var(--profile-drop-down-background-hover);
+                    }
+                }
+            }
+        }
+        svg {
+            stroke: var(--text);
+            width: 24px;
+            height: 24px;
+        }
+    }
+    .features__search {
+        display: flex;
+        align-items: center;
+        direction: rtl !important;
+        background-color: var(--search-background);
+        border-radius: 9px;
+        transition: 0.5s;
+        input {
+            border: none;
+            outline: none;
+            background: transparent;
+            color: var(--text);
+            font-size: 0.8rem;
+            padding: 10px 0 10px 10px;
+        }
+        svg {
+            margin-right: 10px;
+            margin-left: 5px;
+            cursor: text;
+            width: 25px;
+            height: 25px;
+            stroke: var(--text);
+        }
+        img {
+            margin-right: 10px;
+            margin-left: 5px;
+            cursor: text;
+        }
+    }
+    .navbar__navigation {
+        display: flex;
+        align-items: center;
+        div {
+            margin-left: 20px;
+            stroke-width: 0;
+            svg {
+                width: 25px;
+                height: 25px;
+            }
+        }
+        a {
+            text-decoration: none;
+            color: var(--description2);
+            font-size: 1rem;
+            margin-left: 20px;
+            display: block;
+        }
+    }
+}
+
+.features__new-paste {
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+    background-color: var(--button);
+    color: white;
+    padding: 10px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    transition: all 0.125s;
+    border: 0;
+    outline: none;
+
+    &:hover {
+        background-color: var(--button-hover);
+        transform: scale(1.05);
+    }
+
+    &:active {
+        background-color: var(--button);
+        transform: scale(1);
+    }
+}
+
+@keyframes profile-pupup {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
