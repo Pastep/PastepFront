@@ -1,0 +1,94 @@
+.dashboard {
+    padding:0 40px;
+    width: 100%;
+    height: calc(100vh - 110px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main {
+    height: 95%;
+    width: 100%;
+    background-color: white;
+    border-radius: 25px;
+    border: 1px solid var(--paste-border);
+    background-color: var(--code-background);
+    box-shadow: var(--profile-drop-down-background-shadow) 0px 7px 29px 0px;
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+}
+
+.right {
+    width: 20%;
+    height: 100%;
+    border: 1px solid var(--paste-border);
+    border-radius: 25px;
+    background-color: var(--code-background);
+    box-shadow: var(--profile-drop-down-background-shadow) 0px 7px 29px 0px;
+    transform: scale(1.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.header {
+    width: 90%;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--paste-border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header > h1 {
+    background: -webkit-linear-gradient(left, #e40303, #ff8c00, #ffed00, #008026, #004dff, #750787);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 35px;
+}
+
+.options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.right button {
+    width: 90%;
+    outline: none;
+    border: none;
+    padding: 15px;
+    color: var(--text);
+    background-color: transparent;
+    font-size: 20px;
+    transition: 0.5s;
+    cursor: pointer;
+    border-radius: 15px;
+    margin-bottom: 5px;
+}
+
+.right > button:last-of-type{
+    margin-bottom: 0;
+    width: 100%;
+    border-radius: 0 0 15px 15px;
+}
+
+.right button.active {
+    background-color: var(--profile-drop-down-background-hover);
+}
+
+.right button:hover {
+    background-color: var(--profile-drop-down-background-hover);
+    transition: 0.5s;
+}
+
+.left {
+    width: 80%;
+    height: 100%;
+    padding-left: 7px;
+}

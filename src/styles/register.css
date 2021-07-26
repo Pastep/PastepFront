@@ -1,0 +1,14 @@
+.field > div > input {
+    display: flex;
+    outline: none;
+    border: 1px solid var(--code-background);
+    background-color: var(--code-background);
+    color: var(--text);
+    box-shadow: var(--profile-drop-down-background-shadow) 0px 7px 29px 0px;
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: 0.5s;
+    margin-bottom: 15px;
+}

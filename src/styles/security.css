@@ -1,0 +1,39 @@
+.security {
+    width: 100%;
+    padding: 40px 80px;
+    display: flex;
+    justify-content: space-between;
+    height: fit-content;
+}
+
+.security > div {
+    width: 48%;
+    height: 100%;
+    border: 1px solid var(--paste-border);
+    border-radius: 25px;
+    position: relative;
+    padding: 30px 40px;
+}
+
+.top > h1 {
+    padding: 0px 10px;
+    color: var(--text-muted);
+    position: absolute;
+    top: -25px;
+    right: 30px;
+    background-color: var(--code-background);
+}
+
+.editable-area {
+    margin-bottom: 20px;
+}
+
+.editable-area > input {
+    width: 100% !important;
+    color: var(--text) !important;
+    font-size: 18px;
+}
+
+.submit > button {
+    width: fit-content;
+}

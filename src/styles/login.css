@@ -1,0 +1,105 @@
+.login {
+    width: 100%;
+    display: flex;
+    height: calc(100vh - 110px);
+    align-items: center;
+    justify-content: center;
+
+}
+
+.form {
+    padding: 20px 25px;
+    border: 1px solid var(--paste-border);
+    border-radius: 25px;
+    width: 500px;
+}
+
+.header {
+    border-bottom: 1px solid var(--paste-border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header > h1 {
+    background: -webkit-linear-gradient(left, #e40303, #ff8c00, #ffed00, #008026, #004dff, #750787);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+
+
+.field {
+    width: 100%;
+    /*height: 50px;*/
+    margin-bottom: 25px;
+    /*overflow: hidden;*/
+}
+.field > input {
+    display: flex;
+    outline: none;
+    border: 1px solid var(--code-background);
+    background-color: var(--code-background);
+    color: var(--text);
+    box-shadow: var(--profile-drop-down-background-shadow) 0px 7px 29px 0px;
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: 0.5s;
+    margin-bottom: 15px;
+    top: 0;
+    left: 0;
+}
+
+.field > input:focus {
+    border: 1px solid var(--paste-border);
+    transition: 0.5s;
+
+}
+
+.submit {
+    width: 100%;
+}
+
+.submit > * {
+    width: 100%;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+    background-color: var(--button);
+    color: white;
+    padding: 10px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    transition: all 0.125s;
+    border: 0;
+    outline: none;
+}
+.submit > *:hover {
+    background-color: var(--button-hover);
+    transform: scale(1.05);
+}
+.submit > *:active {
+    background-color: var(--button-hover);
+    transform: scale(1);
+}
+
+.spacer {
+    width: 100%;
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--paste-border);
+}
+
+.spacer > div {
+    width: 45%;
+    height: 2px;
+    background-color: var(--paste-border);
+}
