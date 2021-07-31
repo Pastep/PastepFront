@@ -15,7 +15,7 @@ const Edit = (props) => {
                     d="M29 40H5V16h12.6l5-5H3.5C1.8 11 0 11.8 0 13.5v28C0 43.2 1.8 45 3.5 45h28c1.7 0 2.5-1.8 2.5-3.5V23.6l-5 5V40z"
                     className="a"/>
             </svg>
-            <input type={props.type} onChange={props.handler} value={props.value} placeholder={props.placeHolder}/>
+            <input autoComplete={props.autoComplete} required={props.required || false} name={props.name} id={props.id} type={props.type} onChange={props.handler} value={props.value} placeholder={props.placeHolder}/>
         </div>
     );
 };

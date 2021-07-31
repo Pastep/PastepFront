@@ -5,9 +5,10 @@ const Team = () => {
 		<div className="team">
 			<div className="team__wrapper">
 				<div className="team__header">
-					<img width="136" height="136" src="./images/werdox.png" alt="" />
-					<h4>سربازانه امام در راه پیستپ</h4>
-					<h2>"ما میرینیم تو وبسایت ها و اپلیکیشن ها"</h2>
+					<img width="136" height="136" src="/pastep.png" alt="" />
+					<h4>سربازانِ امام در راه پیستپ</h4>
+					<h2>"میازار موری که دانه کش است"</h2>
+					<h2>"که جان دارد و جان شیرین خوش است"</h2>
 					<div className="header__actions">
 						<button className="actions__samples">نمونه کار های ما</button>
 						<button className="actions__request">درخواست پروژه</button>

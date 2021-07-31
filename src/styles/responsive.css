@@ -1,0 +1,281 @@
+.menu {
+    cursor: pointer;
+}
+
+.line {
+    fill: none;
+    stroke: var(--text);
+    stroke-width: 6;
+    transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+    stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line1 {
+    stroke-dasharray: 60 207;
+    stroke-width: 6;
+}
+
+.line2 {
+    stroke-dasharray: 60 60;
+    stroke-width: 6;
+}
+
+.line3 {
+    stroke-dasharray: 60 207;
+    stroke-width: 6;
+}
+
+.opened .line1 {
+    stroke-dasharray: 90 207;
+    stroke-dashoffset: -134;
+    stroke-width: 6;
+}
+
+.opened .line2 {
+    stroke-dasharray: 1 60;
+    stroke-dashoffset: -30;
+    stroke-width: 6;
+}
+
+.opened .line3 {
+    stroke-dasharray: 90 207;
+    stroke-dashoffset: -134;
+    stroke-width: 6;
+}
+
+.menu-responsive {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 100%;
+    background-color: var(--background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: 0.5s;
+    z-index: 1000000000000000;
+}
+
+.menu-responsive > .menu.mode-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.menu-responsive > .options > button {
+    width: 90%;
+    outline: none;
+    border: none;
+    padding: 15px;
+    color: var(--text);
+    background-color: transparent;
+    font-size: 20px;
+    transition: 0.5s;
+    cursor: pointer;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.menu-responsive > .options > button:hover {
+    background-color: var(--profile-drop-down-background-hover);
+}
+
+
+@media screen and (max-width: 800px) {
+    .navbar__navigation {
+        display: none !important;
+    }
+
+    .navbar__navigation__responsive {
+        display: flex !important;
+    }
+
+    .features__search {
+        display: none !important;
+    }
+
+    .features__new-paste {
+        width: 100% !important;
+        font-size: 12px !important;
+        padding: 10px 15px !important;
+    }
+
+    .navbar__features > img {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    #root > div:last-of-type {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .code-type__wrapper .code-type__item {
+        padding: 10px 15px !important;
+    }
+
+    .code-type__item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+    }
+
+    .pastes {
+        padding: 0 30px;
+        margin-top: 20px !important;
+    }
+
+    .header__profile-info {
+        font-size: 12px !important;
+    }
+
+    .header__profile-info > img {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .header__more-info {
+        font-size: 12px !important;
+        padding: 10px 15px !important;
+    }
+
+    .profile-dropdown {
+        left: 88px !important;
+    }
+
+    .viewpaste {
+        padding: 0 40px !important;
+    }
+
+    .user > h1 {
+        font-size: 18px !important;
+    }
+
+    .user > img {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .paste_header > h1 {
+        font-size: 18px !important;
+    }
+
+    .paste_header > img {
+        width: 24px !important;
+        height: 24px !important;
+    }
+
+    .content {
+        flex-direction: column-reverse;
+    }
+
+    .content > div {
+        width: 100% !important;
+    }
+
+    .content > div:last-of-type {
+        margin-bottom: 20px;
+    }
+
+    .profile .profile__wrapper {
+        padding: 0 30px !important;
+    }
+
+    .profile__header {
+        flex-direction: column;
+    }
+
+    .header__right > img {
+        width: 60px !important;
+        height: 60px !important;
+    }
+
+    .profile .profile__wrapper .profile__sections .sections__wrapper .section {
+        font-size: 12px !important;
+    }
+
+    .profile__pastes {
+        margin-top: 40px !important;
+    }
+
+    .login {
+        padding: 0 40px !important;
+    }
+
+    .dashboard {
+        padding: 0 40px !important;
+    }
+
+    .left {
+        width: 100% !important;
+    }
+
+    /*.right {*/
+    /*    display: none !important;*/
+    /*}*/
+    .dashboard .main {
+        flex-direction: column;
+    }
+
+    .dashboard .main > .right {
+        width: 100%;
+        transform: scale(1.05) translateY(-10px);
+    }
+
+    .dashboard .header__right {
+        flex-direction: column !important;
+    }
+
+    .dashboard .header__right > .editable-area {
+        height: fit-content !important;
+    }
+
+    .dashboard .editable-area {
+        height: 50px !important;
+    }
+
+    .dashboard .editable-area > input {
+        height: 100%;
+    }
+
+    .dashboard .name__wrapper > button {
+        padding: 10px 15px !important;
+        font-size: 10px !important;
+    }
+
+    .dashboard .profile .profile__wrapper .profile__header .header__right .right__info {
+        margin-right: 0 !important;
+    }
+
+    .security {
+        flex-direction: column;
+        margin-top: 10px;
+        padding: 40px 10px !important;
+    }
+    .security > form {
+        width: 100% !important;
+    }
+
+    .top > h1 {
+        font-size: 20px !important;
+        top: -14px !important;
+    }
+    .follower {
+        width: 100% !important;
+    }
+    .header__left {
+        margin-top: 60px;
+        width: 100%;
+    }
+    .profile__sections {
+        margin-top: 0 !important;
+    }
+    .left__follow {
+        width: 100%;
+    }
+}

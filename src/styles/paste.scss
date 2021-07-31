@@ -16,6 +16,7 @@
       .header__profile-info {
         display: flex;
         gap: 0 10px;
+        align-items: center;
 
         img {
           border-radius: 100%;
@@ -84,6 +85,7 @@
         display: flex;
         justify-content: space-between;
 
+
         svg, img {
           cursor: pointer;
           transition: all 0.115s;
@@ -113,5 +115,11 @@
         color: var(--text-muted2);
       }
     }
+  }
+}
+
+#deletesvg {
+  &:hover {
+    fill: crimson !important;
   }
 }

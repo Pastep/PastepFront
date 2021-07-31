@@ -1,10 +1,12 @@
 import "./base.scss";
+import "./styles/responsive.css";
 
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 // Components
 import Header from "./components/header/Header";
+import HeaderItem from "./components/header/HeaderItem";
 
 // Pages
 import Home from "./pages/Home";
@@ -13,15 +15,21 @@ import Team from "./pages/Team";
 import Profile from "./pages/Profile";
 import NewPaste from "./pages/NewPaste";
 import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import {isEmpty} from "codemirror/src/util/misc";
+import ViewPaste from "./pages/ViewPaste";
+import EditPaste from "./pages/EditPaste";
+import Loader from "./components/Loader";
+import Mode from "./components/Mode";
 
 const backend = "http://localhost:5000";
 
 
 function App() {
-    const [pastes, setPastes] = useState([]);
+    const [isLoading, setLoading] = useState(false);
+    const [menu, setMenu] = useState(false);
+    const [placeToRedirect, setPlace] = useState("");
     const [token, setToken] = useState(localStorage.getItem("token"));
     const handleTokenChange = (newToken) => {
         setToken(newToken);
@@ -29,21 +37,217 @@ function App() {
         const getUser = async () => {
             const data = await fetchUser();
             setUser(data);
-            console.log(data);
         }
         getUser();
     }
     const [user, setUser] = useState({});
     const headerOptions = {
-        Authorization: token,
+        Authorization: "Bearer " + token,
         "Content-Type": "application/json"
     };
-    const fetchPastes = async () => {
-        const res = await fetch(backend + "/pastes/all");
+    const fetchCreateComment = async (paste, content) => {
+        setLoading(true);
+        const result = await fetch(`${backend}/pastes/comments/create`, {
+            method: "POST",
+            headers: headerOptions,
+            body: JSON.stringify({
+                paste: paste,
+                content: content
+            })
+        });
+        const data = await result.json();
+        setLoading(false);
+        return data;
+    };
+    const fetchComments = async (pasteId) => {
+        setLoading(true);
+        const result = await fetch(`${backend}/pastes/comments/all?paste=${pasteId}`);
+        const data = await result.json();
+        setLoading(false);
+        return data;
+    };
+    const fetchPasswordReset = async (body) => {
+        setLoading(true);
+        const result = await fetch(`${backend}/accounts/password/reset`, {
+            method: "POST",
+            headers: headerOptions,
+            body: JSON.stringify(body)
+        });
+        const data = await result.json();
+        setLoading(false);
+        return data;
+    };
+    const fetchDeleteComment = async (id) => {
+        setLoading(true);
+        const result = await fetch(`${backend}/pastes/comments/delete`, {
+            method: "DELETE",
+            headers: headerOptions,
+            body: JSON.stringify({
+                id: id
+            })
+        });
+        const data = await result.json();
+        setLoading(false);
+        return data;
+    };
+    const fetchLanguages = async () => {
+        setLoading(true);
+        const result = await fetch(`${backend}/languages/all`);
+        const data = await result.json();
+        setLoading(false);
+        return data;
+    }
+    const fetchUpdatePaste = async (body) => {
+        setLoading(true);
+        const result = await fetch(`${backend}/pastes/update`, {
+            method: "PUT",
+            headers: headerOptions,
+            body: JSON.stringify(body)
+        })
+        const data = await result.json();
+        setLoading(false);
+        return data;
+    };
+    const fetchFollowers = async (user) => {
+        setLoading(true);
+        const result = await fetch(backend + `/accounts/people/followers?user=${user}`);
+        const data = await result.json();
+        setLoading(false);
+        return data;
+    }
+    const fetchFollowings = async (user) => {
+        setLoading(true);
+        const result = await fetch(backend + `/accounts/people/followings?user=${user}`);
+        const data = await result.json();
+        setLoading(false);
+        return data;
+    }
+    const fetchToggleFollow = async (target) => {
+        setLoading(true);
+        const result = await fetch(backend + `/accounts/people/toggleFollow`, {
+            method: "POST",
+            headers: headerOptions,
+            body: JSON.stringify({target: target})
+        });
+        const data = await result.json();
+        setLoading(false);
+        return data;
+    }
+    const deletePaste = async (id) => {
+        setLoading(true);
+        const result = await fetch(backend + "/pastes/delete", {
+            method: "DELETE",
+            headers: headerOptions,
+            body: JSON.stringify({id: id})
+        });
+        const data = await result.json();
+        setLoading(false);
+        return data;
+    }
+    const fetchPaste = async ({id, name, password, isRaw = false}) => {
+        setLoading(true);
+        const query = id ? `id=${id}` : `name=${name}`
+        const result = await fetch(backend + `/pastes/read?isRaw=${isRaw ? "yes" : "no"}&password=${password}&${query}`, {
+            method: "GET",
+            headers: headerOptions
+        });
+        const data = await result.json();
+        setLoading(false);
+        return data;
+    }
+    const fetchUserData = async (body) => {
+        setLoading(true);
+        const result = await fetch(backend + "/accounts/get?" + body.name + "=" + body.value, {
+            headers: headerOptions
+        });
+        const data = await result.json();
+        setLoading(false);
+        return data;
+    }
+    const fetchPasteCreate = async (body) => {
+        setLoading(true);
+        const result = await fetch(backend + "/pastes/create", {
+            method: "POST",
+            headers: headerOptions,
+            body: JSON.stringify(body)
+        });
+        const data = await result.json();
+        setLoading(false);
+        return data;
+    }
+    const fetchAvatarUpdate = async (file) => {
+        setLoading(true);
+        const formData = new FormData();
+        formData.append("avatar", file, "profile.png");
+        const result = await fetch(backend + "/accounts/avatar", {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + token
+            },
+            body: formData
+        });
+        const data = await result.json();
+        return data;
+    }
+    const fetchUserUpdate = async (body) => {
+        setLoading(true);
+        const res = await fetch(backend + "/accounts/update", {
+            method: "PUT",
+            headers: headerOptions,
+            body: JSON.stringify(body)
+        });
         const data = await res.json();
+        setLoading(false);
+        return data;
+    }
+    const fetchRegister = async (username, persianUsername, email, password) => {
+        setLoading(true);
+        const body = {
+            username: username,
+            persianUsername: persianUsername,
+            email: email,
+            password: password
+        }
+        const res = await fetch(backend + "/accounts/create", {
+            method: "POST",
+            headers: headerOptions,
+            body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        setLoading(false);
+        return data;
+    }
+    const fetchPastes = async (limit) => {
+        setLoading(true);
+        const res = await fetch(backend + "/pastes/all?limit=" + limit, {
+            headers: headerOptions
+        });
+        const data = await res.json();
+        setLoading(false);
+        return data;
+    }
+    const pasteLikeToggle = async (pasteId) => {
+        setLoading(true);
+        const res = await fetch(backend + "/pastes/likes/toggle", {
+            method: "POST",
+            headers: headerOptions,
+            body: JSON.stringify({paste: pasteId})
+        });
+        const data = await res.json();
+        setLoading(false);
+        return data;
+    }
+    const fetchUserPastes = async (id) => {
+        setLoading(true);
+        const res = await fetch(backend + "/pastes/all?user=" + id, {
+            headers: headerOptions
+        });
+        const data = await res.json();
+        setLoading(false);
         return data;
     }
     const fetchLogin = async (username, password) => {
+        setLoading(true);
         let body = {
             password: password
         };
@@ -58,13 +262,16 @@ function App() {
             body: JSON.stringify(body)
         })
         const data = await res.json();
+        setLoading(false);
         return data
     }
     const fetchUser = async () => {
-        const res = await fetch(backend + "/accounts/get?token=" + localStorage.getItem("token") , {
+        setLoading(true);
+        const res = await fetch(backend + "/accounts/get?token=" + localStorage.getItem("token"), {
             method: "GET",
         });
         const data = await res.json();
+        setLoading(false);
         return data;
     }
     // currentMode state
@@ -104,19 +311,51 @@ function App() {
             const data = await fetchUser();
             setUser(data);
         }
-        if (token !== ""){
+        if (token !== "") {
             getUser();
         }
 
     }, []);
+    const responsiveMenuItemClick = (e) => {
+        const menu = document.querySelector(".menu-responsive");
+        menu.style.left = "100%";
+        window.location.href = e.target.getAttribute("to");
+    }
+
 
     return (
         <Router>
+            <div className="menu-responsive" style={{left: menu ? "0" : "100%"}}>
+                <div className="menu mode-toggle opened"
+                     onClick={(e) => {
+                         setMenu(!menu);
+                     }}
+                     aria-label="Main Menu">
+                    <svg width="28" height="28" viewBox="0 0 100 100" style={{pointerEvents: "none"}}>
+                        <path className="line line1"
+                              d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"/>
+                        <path className="line line2" d="M 20,50 H 80"/>
+                        <path className="line line3"
+                              d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"/>
+                    </svg>
+                </div>
+                <div className="header">
+                    <h1>پیستپ</h1>
+                </div>
+                <div className="options">
+                    <button to="/" onClick={responsiveMenuItemClick}>خانه</button>
+                    <button to="/best-rating" onClick={responsiveMenuItemClick}>مجبوب ترین ها</button>
+                    <button to="/team" onClick={responsiveMenuItemClick}>تیم ما</button>
+                </div>
+            </div>
             <Header
                 backend={backend}
                 user={user}
                 toggleMode={toggleMode}
                 currentMode={currentMode}
+                isLoading={isLoading}
+                menu={menu}
+                setMenu={setMenu}
             />
             <Switch>
                 <Route path={["/best-rating", "/bestrating"]} exact>
@@ -125,23 +364,46 @@ function App() {
                 <Route path={["/team", "/about", "/aboutus"]}>
                     <Team/>
                 </Route>
+                <Route path="/pastes/edit/:id">
+                    <EditPaste fetchUpdatePaste={fetchUpdatePaste} currentUser={user} pasteLikeToggle={pasteLikeToggle}
+                               backend={backend} currentMode={currentMode} user={user} fetchPaste={fetchPaste}/>
+                </Route>
+                <Route path={["/pastes/view/:name", "/pastes/:name"]}>
+                    <ViewPaste fetchDeleteComment={fetchDeleteComment} fetchCreateComment={fetchCreateComment}
+                               pasteLikeToggle={pasteLikeToggle} backend={backend} currentMode={currentMode} user={user}
+                               fetchPaste={fetchPaste}
+                               fetchComments={fetchComments}/>
+                </Route>
                 <Route path={["/new-paste", "/newpaste"]}>
-                    <NewPaste user={user} token={token} currentMode={currentMode}/>
+                    <NewPaste fetchLanguages={fetchLanguages} fetchPasteCreate={fetchPasteCreate} user={user}
+                              currentMode={currentMode}/>
                 </Route>
                 <Route path="/accounts/dashboard">
-                    <Dashboard handleTokenChange={handleTokenChange} backend={backend} user={user} token={token} currentMode={currentMode}/>
+                    <Dashboard deletePaste={deletePaste} setToken={setToken} fetchAvatarUpdate={fetchAvatarUpdate}
+                               setUser={setUser}
+                               fetchUserUpdate={fetchUserUpdate} handleTokenChange={handleTokenChange} backend={backend}
+                               user={user} token={token}
+                               currentMode={currentMode} fetchUserPastes={fetchUserPastes}
+                               pasteLikeToggle={pasteLikeToggle} fetchFollowers={fetchFollowers}
+                               fetchFollowings={fetchFollowings}/>
+                </Route>
+                <Route path="/accounts/forgot-password">
+                    <ForgotPassword token={token} user={user} fetchPasswordReset={fetchPasswordReset}/>
                 </Route>
                 <Route path="/accounts/login">
                     <Login token={token} user={user} setToken={handleTokenChange} fetchLogin={fetchLogin}/>
                 </Route>
                 <Route path="/accounts/register">
-                    <Register token={token}/>
+                    <Register user={user} fetchRegister={fetchRegister}/>
                 </Route>
                 <Route path="/accounts/view/:username">
-                    <Profile currentMode={currentMode}/>
+                    <Profile currentUser={user} fetchToggleFollow={fetchToggleFollow} fetchFollowers={fetchFollowers}
+                             pasteLikeToggle={pasteLikeToggle} currentMode={currentMode} fetchUserData={fetchUserData}
+                             fetchUserPastes={fetchUserPastes} backend={backend}/>
                 </Route>
                 <Route path={["/", "/home", "/index"]}>
-                    <Home fetchPastes={fetchPastes} currentMode={currentMode} backend={backend}/>
+                    <Home pasteLikeToggle={pasteLikeToggle} fetchPastes={fetchPastes} currentMode={currentMode}
+                          backend={backend}/>
                 </Route>
             </Switch>
         </Router>

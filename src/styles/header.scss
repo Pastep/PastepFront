@@ -111,6 +111,7 @@
     .navbar__navigation {
         display: flex;
         align-items: center;
+
         div {
             margin-left: 20px;
             stroke-width: 0;
@@ -164,4 +165,16 @@
         opacity: 1;
         transform: translateY(0px);
     }
+}
+
+.loading {
+    width: 25px !important;
+    height: 25px !important;
+    transform: translateY(-2px);
+}
+
+.loading > svg {
+    width: 100% !important;
+    height: 100% !important;
+    transform: scale(1.4);
 }

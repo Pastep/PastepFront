@@ -1,13 +1,49 @@
 import "../../styles/dashboard-profile.scss";
 import Paste from "../Paste";
 import {useState} from "react";
-import { Redirect } from "react-router-dom";
 import Edit from "./Edit";
+import {useEffect} from "react";
 
 const Profile = (props) => {
     const [username, setUsername] = useState(props.user.persianUsername);
     const [bio, setBio] = useState(props.user.bio);
-    const [image, setImage] = useState("");
+    const [pastes, setPastes] = useState([]);
+    useEffect(() => {
+        const getUser = async () => {
+            const fetchedPastes = await props.fetchUserPastes(props.user.id);
+            setPastes(fetchedPastes);
+        }
+        getUser();
+    }, [])
+
+    const updateUser = async (e) => {
+        e.preventDefault();
+        const file = document.getElementById("file").files[0];
+        if (file) {
+            const resultAvatar = await props.fetchAvatarUpdate(file);
+            if (resultAvatar.avatar) {
+                props.user.avatar = resultAvatar.avatar;
+                props.setUser(props.user);
+                e.target.style.backgroundColor = "rgb(22, 232, 35)";
+                setTimeout(() => {
+                    e.target.style.backgroundColor = "";
+                }, 2000);
+            }
+        }
+        const result = await props.fetchUserUpdate({
+            persianUsername: username,
+            bio: bio
+        });
+        if (result.message === "User updated successfully") {
+            props.user.persianUsername = username;
+            props.user.bio = bio;
+            props.setUser(props.user);
+            e.target.style.backgroundColor = "rgb(22, 232, 35)";
+            setTimeout(() => {
+                e.target.style.backgroundColor = "";
+            }, 2000);
+        }
+    }
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
     };
@@ -15,8 +51,26 @@ const Profile = (props) => {
         setBio(e.target.value);
     }
     const handleImageChange = (e) => {
-
+        const file = e.target.files[0];
+        let isFind = false;
+        const types = [
+            '.jpg',
+            '.jfif',
+            '.png',
+            'jpeg'
+        ];
+        types.forEach((item, counter) => {
+            if (file.name.toLowerCase().includes(item)) {
+                document.getElementById('userAvatar').src = window.URL.createObjectURL(file);
+                isFind = true;
+            }
+        })
+        if (!isFind) {
+            e.target.files = [];
+            return false;
+        }
     }
+
     return (
         <div className="profile">
             <div className="profile__wrapper">
@@ -40,32 +94,21 @@ const Profile = (props) => {
                             </svg>
                             <input hidden type="file" id="file" onChange={handleImageChange}/>
                             <label htmlFor="file" style={{cursor: "pointer"}}>
-                                <img width="93" height="93" src={props.user.avatar ? props.backend + "/avatars/" + props.user.avatar : "/images/guest.png"} alt=""/>
+                                <img id="userAvatar" width="93" height="93"
+                                     src={props.user.avatar ? props.backend + "/avatars/" + props.user.avatar : "/images/guest.jpg"}
+                                     alt={props.username}/>
                             </label>
                         </div>
                         <div className="right__info">
                             <div className="name__wrapper">
                                 <Edit handler={handleUsernameChange} value={username}/>
                                 {/*<h2>{username}</h2>*/}
-                                <div className="badges">
-                                    <div className="badges__wrapper">
-                                        <div className="badge badge--purple">
-                                            <h4>ادمین</h4>
-                                        </div>
-                                    </div>
-                                </div>
+                                <button onClick={updateUser}>ثبت تغییرات</button>
                             </div>
                             <Edit handler={handleBioChange} value={bio}/>
                         </div>
                     </div>
-                    <div className="header__left">
-                        <div className="left__followers">
-                            <div className="followers__count">۱۲+</div>
-                            <img width="25" height="25" src="/images/werdox.png"></img>
-                            <img width="25" height="25" src="/images/werdox.png"></img>
-                        </div>
-                        <button className="left__follow">دنبال کردن</button>
-                    </div>
+
                 </div>
                 <div className="profile__sections">
                     <div className="sections__wrapper">
@@ -78,83 +121,29 @@ const Profile = (props) => {
                 </div>
                 <div className="profile__pastes">
                     <div className="pastes__wrapper">
-                        <Paste
-                            {...props}
-                            userName="Werdox"
-                            userLocation="شیراز | ایران"
-                            profilePic="/images/werdox.png"
-                            language="javascript"
-                            code={"console.log('Salam');\nconst react = require('react');\nconst express = require('express');"}
-                            title="یک کلاس در تایپ اسکریپت"
-                            description="پرنده ها بال میزنند و آسمان را تماشا میکنند. ناگهان پرنده ای پر
-            میزند و دیگر آسمان را تماشا نمیکند!"
-                        />
-                        <Paste
-                            {...props}
-                            userName="Werdox"
-                            userLocation="شیراز | ایران"
-                            profilePic="/images/werdox.png"
-                            language="javascript"
-                            code={"console.log('Salam');\nconst react = require('react');\nconst express = require('express');"}
-                            title="یک کلاس در تایپ اسکریپت"
-                            description="پرنده ها بال میزنند و آسمان را تماشا میکنند. ناگهان پرنده ای پر
-            میزند و دیگر آسمان را تماشا نمیکند!"
-                        />
-                        <Paste
-                            {...props}
-                            userName="Werdox"
-                            userLocation="شیراز | ایران"
-                            profilePic="/images/werdox.png"
-                            language="javascript"
-                            code={"console.log('Salam');\nconst react = require('react');\nconst express = require('express');"}
-                            title="یک کلاس در تایپ اسکریپت"
-                            description="پرنده ها بال میزنند و آسمان را تماشا میکنند. ناگهان پرنده ای پر
-            میزند و دیگر آسمان را تماشا نمیکند!"
-                        />
-                        <Paste
-                            {...props}
-                            userName="Werdox"
-                            userLocation="شیراز | ایران"
-                            profilePic="/images/werdox.png"
-                            language="javascript"
-                            code={"console.log('Salam');\nconst react = require('react');\nconst express = require('express');"}
-                            title="یک کلاس در تایپ اسکریپت"
-                            description="پرنده ها بال میزنند و آسمان را تماشا میکنند. ناگهان پرنده ای پر
-            میزند و دیگر آسمان را تماشا نمیکند!"
-                        />
-                        <Paste
-                            {...props}
-                            userName="Werdox"
-                            userLocation="شیراز | ایران"
-                            profilePic="/images/werdox.png"
-                            language="javascript"
-                            code={"console.log('Salam');\nconst react = require('react');\nconst express = require('express');"}
-                            title="یک کلاس در تایپ اسکریپت"
-                            description="پرنده ها بال میزنند و آسمان را تماشا میکنند. ناگهان پرنده ای پر
-            میزند و دیگر آسمان را تماشا نمیکند!"
-                        />
-                        <Paste
-                            {...props}
-                            userName="Werdox"
-                            userLocation="شیراز | ایران"
-                            profilePic="/images/werdox.png"
-                            language="javascript"
-                            code={"console.log('Salam');\nconst react = require('react');\nconst express = require('express');"}
-                            title="یک کلاس در تایپ اسکریپت"
-                            description="پرنده ها بال میزنند و آسمان را تماشا میکنند. ناگهان پرنده ای پر
-            میزند و دیگر آسمان را تماشا نمیکند!"
-                        />
-                        <Paste
-                            {...props}
-                            userName="Werdox"
-                            userLocation="شیراز | ایران"
-                            profilePic="/images/werdox.png"
-                            language="javascript"
-                            code={"console.log('Salam');\nconst react = require('react');\nconst express = require('express');"}
-                            title="یک کلاس در تایپ اسکریپت"
-                            description="پرنده ها بال میزنند و آسمان را تماشا میکنند. ناگهان پرنده ای پر
-            میزند و دیگر آسمان را تماشا نمیکند!"
-                        />
+                        {pastes.map((item) => {
+                            let paste = item.paste;
+                            let user = item.user;
+                            let language = item.language;
+                            return <Paste
+                                key={paste.id}
+                                id={paste.id}
+                                {...props}
+                                userName={user.persianUsername ? user.persianUsername : user.username}
+                                userLocation={language.persianName}
+                                profilePic={user.avatar ? `${props.backend}/avatars/${user.avatar}` : "/images/guest.jpg"}
+                                language={language.slug}
+                                code={paste.content.length > 150 ? paste.content.substr(0, 150) + "..." : paste.content}
+                                title={paste.title}
+                                description={paste.shortDescription ? paste.shortDescription : "فاقد توضیحات"}
+                                name={paste.name}
+                                liked={item.liked}
+                                delete={true}
+                                pastes={pastes}
+                                setPastes={setPastes}
+                                edit={true}
+                            />
+                        })}
                     </div>
                 </div>
             </div>

@@ -4,15 +4,17 @@
     display: flex;
     justify-content: space-between;
     height: fit-content;
+    flex-wrap: wrap;
 }
 
-.security > div {
+.security > form {
     width: 48%;
     height: 100%;
     border: 1px solid var(--paste-border);
     border-radius: 25px;
     position: relative;
     padding: 30px 40px;
+    margin-bottom: 40px;
 }
 
 .top > h1 {
@@ -36,4 +38,5 @@
 
 .submit > button {
     width: fit-content;
+    transition: 0.5s;
 }

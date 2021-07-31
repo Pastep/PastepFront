@@ -5,6 +5,8 @@ import {Scrollbar} from "react-scrollbars-custom";
 // Pages
 import Security from "../components/Dashboard/Security";
 import Profile from "../components/Dashboard/Profile";
+import Followers from "../components/Dashboard/Followers";
+import Followings from "../components/Dashboard/Followings";
 import {Redirect} from "react-router-dom";
 
 const Dashboard = (props) => {
@@ -20,9 +22,13 @@ const Dashboard = (props) => {
         props.handleTokenChange("");
         return <Redirect to="/accounts/login" />;
     }
+
+    if (!props.user.id) {
+        return  <Redirect to="/accounts/login"/>;
+    }
     return (
         <div className="dashboard">
-            {!props.user.avatar && <Redirect to="/accounts/login" />}
+            {!props.user.id && <Redirect to="/accounts/login" />}
             <div className="main">
                 <div className="right">
                     <div className="header">
@@ -33,8 +39,8 @@ const Dashboard = (props) => {
                         <button menu="0" onClick={handleMenuChange} className="active">مدیریت</button>
                         <button menu="1" onClick={handleMenuChange}>تنظیمات امنیتی</button>
                         <button menu="2" onClick={handleMenuChange}>دنبال کننده&zwnj;ها</button>
-                        <button menu="2" onClick={handleMenuChange}>دنبال شده&zwnj;ها</button>
-                        <button menu="3" onClick={handleMenuChange}>API</button>
+                        <button menu="3" onClick={handleMenuChange}>دنبال شده&zwnj;ها</button>
+                        <button menu="4" onClick={handleMenuChange}>API</button>
                     </div>
                     </Scrollbar>
                     <button style={{color: "red"}} onClick={logOut}>خروج</button>
@@ -43,6 +49,8 @@ const Dashboard = (props) => {
                     <Scrollbar>
                         {menu === 0 && <Profile {...props} />}
                         {menu === 1 && <Security {...props} />}
+                        {menu === 2 && <Followers {...props} />}
+                        {menu === 3 && <Followings {...props} />}
                     </Scrollbar>
                 </div>
             </div>

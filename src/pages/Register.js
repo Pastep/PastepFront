@@ -5,11 +5,12 @@ import "../styles/register.css";
 
 const Register = (props) => {
     const notFilledBorder = "1px solid red";
-    const [currentState, setState] = useState(0);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [persianUsername, setPersianUsername] = useState("");
     const [englishUsername, setEnglishUsername] = useState("");
+    const [successful, setSuccessful] = useState(false);
+    const [error, setError] = useState("");
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -26,24 +27,43 @@ const Register = (props) => {
     // if (props.loggedIn) {
     //     return <Redirect to="/accounts/dashboard" />;
     // }
-    const next = (e) => {
+    const next = async (e) => {
         e.preventDefault();
         const fields = document.querySelectorAll(".field>div>input");
         fields.forEach((item) => {
             item.style.border = "1px solid var(--code-background)";
         })
+        let isOk = true;
         if (!email) {
+            isOk = false;
             document.getElementById("email").style.border = notFilledBorder;
         }
         if (!password) {
+            isOk = false;
             document.getElementById("password").style.border = notFilledBorder;
         }
         if (!persianUsername) {
+            isOk = false;
             document.getElementById("persianUsername").style.border = notFilledBorder;
         }
         if (!englishUsername) {
+            isOk = false;
             document.getElementById("englishUsername").style.border = notFilledBorder;
         }
+        if (isOk) {
+            const result = await props.fetchRegister(englishUsername, persianUsername, email, password);
+            if (result.id) {
+                setSuccessful(true);
+            } else {
+                setError("قبلا این ایمیل یا یوزرنیم استفاده شده است.");
+                document.getElementById("email").style.border = notFilledBorder;
+                document.getElementById("englishUsername").style.border = notFilledBorder;
+            }
+        }
+    }
+
+    if (props.user.id) {
+        return <Redirect to="/accounts/dashboard" />;
     }
 
     return (
@@ -55,19 +75,24 @@ const Register = (props) => {
 
                 <div className="field">
                     <div>
-                        <input id="email" name="email" type="text" placeholder="ایمیل" onChange={handleEmailChange}
+                        <input id="email" name="email" type="email" placeholder="ایمیل" onChange={handleEmailChange}
                                value={email}/>
-                        <input id="password" name="password" type="text" placeholder="پسورد"
+                        <input minLength="3" id="password" name="password" type="password" placeholder="پسورد"
                                onChange={handlePasswordChange} value={password}/>
                     </div>
                     <div>
-                        <input id="persianUsername" name="persianUsername" type="text" placeholder="یوزرنیم به فارسی"
+                        <input minLength="3" id="persianUsername" name="persianUsername" type="text" placeholder="یوزرنیم به فارسی"
                                value={persianUsername} onChange={handlePersianChange}/>
-                        <input id="englishUsername" name="englishUsername" type="text"
+                        <input minLength="3" id="englishUsername" name="englishUsername" type="text"
                                placeholder="یوزرنیم به انگلیسی" value={englishUsername} onChange={handleEnglishChange}/>
                     </div>
                 </div>
-
+                {successful && <div className="error" style={{backgroundColor: "rgb(22, 232, 35)"}}>
+                    اکانت با موفقیت ساخته شد، برای فعال سازی اکانت، روی لینکی که به ایمیل شما فرستاده شده است، کلیک کنید.
+                </div>}
+                {error && <div className="error">
+                    {error}
+                </div>}
                 <div className="submit" onClick={next}>
                     <button type="submit" style={{width: "100%"}}>ثبت نام</button>
                 </div>

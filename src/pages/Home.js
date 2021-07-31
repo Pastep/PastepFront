@@ -7,7 +7,7 @@ const Home = (props) => {
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
         const getPastes = async () => {
-            setPastes(Array.from(await props.fetchPastes()));
+            setPastes(Array.from(await props.fetchPastes(25)));
             setLoading(false);
         }
         getPastes();
@@ -30,14 +30,17 @@ const Home = (props) => {
                         let language = item.language;
                         return <Paste
                             key={paste.id}
+                            id={paste.id}
                             {...props}
                             userName={user.persianUsername ? user.persianUsername : user.username}
-                            userLocation={language.persianName}
+                            userLocation={language.persianName || language.name}
                             profilePic={user.avatar ? `${props.backend}/avatars/${user.avatar}` : "/images/guest.jpg"}
                             language={language.slug}
                             code={paste.content.length > 150 ? paste.content.substr(0, 150) + "..." : paste.content}
                             title={paste.title}
                             description={paste.shortDescription ? paste.shortDescription : "فاقد توضیحات"}
+                            name={paste.name}
+                            liked={item.liked}
                         />
                     })}
                 </div>

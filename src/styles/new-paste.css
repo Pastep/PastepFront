@@ -34,6 +34,12 @@
     margin-bottom: 15px;
 }
 
+.option > h1 > span {
+    font-size: 15px;
+    direction: ltr;
+    color: var(--text-muted);
+}
+
 .option > input, select {
     background-color: var(--code-background);
     outline: none;

@@ -103,3 +103,12 @@
     height: 2px;
     background-color: var(--paste-border);
 }
+
+.error {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 9px;
+    color: white;
+    background-color: rgb(245, 36, 36);
+}

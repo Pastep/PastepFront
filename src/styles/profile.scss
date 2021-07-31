@@ -79,6 +79,11 @@
                     display: flex;
                     align-items: center;
                     gap: 0 5px;
+                    a {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
                     img {
                         border-radius: 100%;
                         cursor: pointer;
@@ -91,7 +96,6 @@
         }
         .profile__sections {
             margin-top: 60px;
-            margin-right: 10px;
             .sections__wrapper {
                 display: flex;
                 gap: 0 20px;
