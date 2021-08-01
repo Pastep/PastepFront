@@ -24,7 +24,7 @@ import Search from "./pages/Search";
 import Loader from "./components/Loader";
 import Mode from "./components/Mode";
 
-const backend = "http://localhost:5000";
+const backend = "https://api.pastep.com";
 
 
 function App() {
