@@ -24,9 +24,6 @@ const Register = (props) => {
     const handleEnglishChange = (e) => {
         setEnglishUsername(e.target.value);
     }
-    // if (props.loggedIn) {
-    //     return <Redirect to="/accounts/dashboard" />;
-    // }
     const next = async (e) => {
         e.preventDefault();
         const fields = document.querySelectorAll(".field>div>input");
@@ -54,10 +51,12 @@ const Register = (props) => {
             const result = await props.fetchRegister(englishUsername, persianUsername, email, password);
             if (result.id) {
                 setSuccessful(true);
-            } else {
+            } else if (result.message) {
                 setError("قبلا این ایمیل یا یوزرنیم استفاده شده است.");
                 document.getElementById("email").style.border = notFilledBorder;
                 document.getElementById("englishUsername").style.border = notFilledBorder;
+            } else if (result.details.length) {
+                setError(result.details[0].message);
             }
         }
     }

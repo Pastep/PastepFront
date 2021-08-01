@@ -64,7 +64,7 @@
     right: 20px;
 }
 
-.menu-responsive > .options > button {
+.menu-responsive > .options > a {
     width: 90%;
     outline: none;
     border: none;
@@ -80,12 +80,20 @@
     text-align: center;
 }
 
-.menu-responsive > .options > button:hover {
+.menu-responsive > .options > a:hover {
     background-color: var(--profile-drop-down-background-hover);
 }
 
 
+
 @media screen and (max-width: 800px) {
+    .viewpaste_header {
+        flex-direction: column;
+    }
+
+    .viewpaste_header > div {
+        margin-bottom: 10px;
+    }
     .navbar__navigation {
         display: none !important;
     }
@@ -128,6 +136,9 @@
     .pastes {
         padding: 0 30px;
         margin-top: 20px !important;
+    }
+    .paste {
+        width: 320px !important;
     }
 
     .header__profile-info {

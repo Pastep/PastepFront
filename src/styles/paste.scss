@@ -17,6 +17,13 @@
         display: flex;
         gap: 0 10px;
         align-items: center;
+        a {
+          text-decoration: none;
+          color: white;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
 
         img {
           border-radius: 100%;

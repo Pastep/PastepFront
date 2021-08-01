@@ -7,21 +7,21 @@ const Home = (props) => {
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
         const getPastes = async () => {
-            setPastes(Array.from(await props.fetchPastes(25)));
+            setPastes(Array.from(await props.fetchPastes({limit:25, shuffle: "yes", latest: "no"})));
             setLoading(false);
         }
         getPastes();
     }, []);
     return (
         <div>
-            <div className="flex justify-center">
-                <div className="code-type__wrapper flex">
-                    <div className="code-type__item selected">کد های کوتاه</div>
-                    <div className="code-type__item">کد های برگزیده</div>
-                    <div className="code-type__item">فرانت اند</div>
-                    <div className="code-type__item">بک اند</div>
-                </div>
-            </div>
+            {/*<div className="flex justify-center">*/}
+            {/*    <div className="code-type__wrapper flex">*/}
+            {/*        <div className="code-type__item selected">کد های کوتاه</div>*/}
+            {/*        <div className="code-type__item">کد های برگزیده</div>*/}
+            {/*        <div className="code-type__item">فرانت اند</div>*/}
+            {/*        <div className="code-type__item">بک اند</div>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
             <div className="pastes">
                 <div className="pastes__wrapper">
                     {isLoading ? <h1>در حال بارگزاری...</h1> : pastes.map((item) => {
@@ -33,6 +33,7 @@ const Home = (props) => {
                             id={paste.id}
                             {...props}
                             userName={user.persianUsername ? user.persianUsername : user.username}
+                            userLink={`/accounts/view/${user.username}`}
                             userLocation={language.persianName || language.name}
                             profilePic={user.avatar ? `${props.backend}/avatars/${user.avatar}` : "/images/guest.jpg"}
                             language={language.slug}

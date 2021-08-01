@@ -13,7 +13,7 @@ const Paste = (props) => {
                     <div className="header__profile-info">
                         <img width="48" height="48" src={props.profilePic} alt=""/>
                         <div className="profile-info__name">
-                            <p>{props.userName}</p>
+                            <Link to={props.userLink}>{props.userName}</Link>
                             <p className="text-muted">{props.userLocation}</p>
                         </div>
                     </div>

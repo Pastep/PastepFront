@@ -1,11 +1,11 @@
 import "./base.scss";
 import "./styles/responsive.css";
 
-import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Link, Route, Switch} from "react-router-dom";
 import {useEffect, useState} from "react";
-
 // Components
 import Header from "./components/header/Header";
+import ResponsiveMenu from "./components/ResponsiveMenu";
 import HeaderItem from "./components/header/HeaderItem";
 
 // Pages
@@ -20,6 +20,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import ViewPaste from "./pages/ViewPaste";
 import EditPaste from "./pages/EditPaste";
+import Search from "./pages/Search";
 import Loader from "./components/Loader";
 import Mode from "./components/Mode";
 
@@ -29,8 +30,9 @@ const backend = "http://localhost:5000";
 function App() {
     const [isLoading, setLoading] = useState(false);
     const [menu, setMenu] = useState(false);
-    const [placeToRedirect, setPlace] = useState("");
+    const [showProfile, setShowProfile] = useState(false);
     const [token, setToken] = useState(localStorage.getItem("token"));
+    const [error, setError] = useState("");
     const handleTokenChange = (newToken) => {
         setToken(newToken);
         localStorage.setItem("token", newToken);
@@ -57,6 +59,12 @@ function App() {
         });
         const data = await result.json();
         setLoading(false);
+        if (data.message === "Token is incorrect.") {
+            setError("لطفا لاگین کنید");
+            setTimeout(() => {
+                setError("");
+            }, 2000)
+        }
         return data;
     };
     const fetchComments = async (pasteId) => {
@@ -217,15 +225,37 @@ function App() {
         setLoading(false);
         return data;
     }
-    const fetchPastes = async (limit) => {
+    const fetchSearchPastes = async ({limit, shuffle = "no", latest = "no", title, user}) => {
         setLoading(true);
-        const res = await fetch(backend + "/pastes/all?limit=" + limit, {
+        let query = backend + "/pastes/search?title=" + title;
+        if (limit) {
+            query += "&limit=" + limit;
+        }
+        if (shuffle) {
+            query += "&shuffle=yes&";
+        }
+        if (latest) {
+            query += "&latest=yes&";
+        }
+        if (user) {
+            query += "&user=" + user
+        }
+        const res = await fetch(query, {
             headers: headerOptions
         });
         const data = await res.json();
         setLoading(false);
         return data;
     }
+    const fetchPastes = async ({limit, shuffle = "no", latest = "no"}) => {
+        setLoading(true);
+        const res = await fetch(backend + `/pastes/all?limit=${limit}&shuffle=${shuffle}&latest=${latest}`, {
+            headers: headerOptions
+        });
+        const data = await res.json();
+        setLoading(false);
+        return data;
+    };
     const pasteLikeToggle = async (pasteId) => {
         setLoading(true);
         const res = await fetch(backend + "/pastes/likes/toggle", {
@@ -235,6 +265,12 @@ function App() {
         });
         const data = await res.json();
         setLoading(false);
+        if (data.message === "Token is incorrect.") {
+            setError("لطفا لاگین کنید");
+            setTimeout(() => {
+                setError("");
+            }, 2000)
+        }
         return data;
     }
     const fetchUserPastes = async (id) => {
@@ -325,30 +361,15 @@ function App() {
 
     return (
         <Router>
-            <div className="menu-responsive" style={{left: menu ? "0" : "100%"}}>
-                <div className="menu mode-toggle opened"
-                     onClick={(e) => {
-                         setMenu(!menu);
-                     }}
-                     aria-label="Main Menu">
-                    <svg width="28" height="28" viewBox="0 0 100 100" style={{pointerEvents: "none"}}>
-                        <path className="line line1"
-                              d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"/>
-                        <path className="line line2" d="M 20,50 H 80"/>
-                        <path className="line line3"
-                              d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"/>
-                    </svg>
-                </div>
-                <div className="header">
-                    <h1>پیستپ</h1>
-                </div>
-                <div className="options">
-                    <button to="/" onClick={responsiveMenuItemClick}>خانه</button>
-                    <button to="/best-rating" onClick={responsiveMenuItemClick}>مجبوب ترین ها</button>
-                    <button to="/team" onClick={responsiveMenuItemClick}>تیم ما</button>
+            {error && <div className="onScreenError">
+                <div className="error">
+                    {error}
                 </div>
             </div>
+            }
+            <ResponsiveMenu menu={menu} setMenu={setMenu}/>
             <Header
+                fetchSearchPastes={fetchSearchPastes}
                 backend={backend}
                 user={user}
                 toggleMode={toggleMode}
@@ -356,6 +377,8 @@ function App() {
                 isLoading={isLoading}
                 menu={menu}
                 setMenu={setMenu}
+                showProfile={showProfile}
+                setShowProfile={setShowProfile}
             />
             <Switch>
                 <Route path={["/best-rating", "/bestrating"]} exact>
@@ -363,6 +386,12 @@ function App() {
                 </Route>
                 <Route path={["/team", "/about", "/aboutus"]}>
                     <Team/>
+                </Route>
+
+                <Route path="/pastes/search/:title">
+                    <Search fetchSearchPastes={fetchSearchPastes} backend={backend} pasteLikeToggle={pasteLikeToggle}
+                            currentMode={currentMode}
+                            backend={backend}/>
                 </Route>
                 <Route path="/pastes/edit/:id">
                     <EditPaste fetchUpdatePaste={fetchUpdatePaste} currentUser={user} pasteLikeToggle={pasteLikeToggle}
@@ -397,7 +426,8 @@ function App() {
                     <Register user={user} fetchRegister={fetchRegister}/>
                 </Route>
                 <Route path="/accounts/view/:username">
-                    <Profile currentUser={user} fetchToggleFollow={fetchToggleFollow} fetchFollowers={fetchFollowers}
+                    <Profile fetchFollowings={fetchFollowings} currentUser={user} fetchToggleFollow={fetchToggleFollow}
+                             fetchFollowers={fetchFollowers}
                              pasteLikeToggle={pasteLikeToggle} currentMode={currentMode} fetchUserData={fetchUserData}
                              fetchUserPastes={fetchUserPastes} backend={backend}/>
                 </Route>

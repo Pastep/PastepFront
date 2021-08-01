@@ -39,8 +39,11 @@ const ForgotPassword = (props) => {
             });
             if (result.message === "Email sent.") {
                 setMessage("ایمیل عوض کردن پسورد فرستاده شد.");
+                setError("");
             } else if (result.message === "User not found.") {
                 setError("اکانتی با این ایمیل یافت نشد.")
+            } else if (result.details.length) {
+                setError(result.details[0].message);
             }
         }
     }
@@ -54,10 +57,10 @@ const ForgotPassword = (props) => {
                 </div>
 
                 <div className="field">
-                    <input id="email" name="username" type="text" placeholder="یوزرنیم یا ایمیل"
+                    <input id="email" name="username" type="text" placeholder="ایمیل"
                            onChange={handleEmailChange}
                            value={email}/>
-                    <input minLength="3" id="new_password" name="password" type="password" placeholder="پسورد"
+                    <input minLength="3" id="new_password" name="password" type="password" placeholder="پسورد جدید"
                            onChange={handlePasswordChange}
                            value={newPassword}/>
                 </div>

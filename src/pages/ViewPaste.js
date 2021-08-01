@@ -7,12 +7,14 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import {atomOneDark, vs} from "react-syntax-highlighter/dist/esm/styles/hljs";
+import {Link} from "react-router-dom";
 
 const ViewPaste = (props) => {
     const [paste, setPaste] = useState({});
     const [isLiked, setLiked] = useState(false);
     const [comment, setComment] = useState("");
     const [comments, setComments] = useState([]);
+    const [error, setError] = useState("");
     const [menu, setMenu] = useState("newcomment");
     const handleCommentChange = (e) => {
         setComment(e.target.value);
@@ -63,7 +65,8 @@ const ViewPaste = (props) => {
                         <img
                             src={paste.user.avatar ? `${props.backend}/avatars/${paste.user.avatar}` : "/images/guest.jpg"}
                             alt={paste.user.username}/>
-                        <h1>{paste.user.persianUsername || paste.user.username}</h1>
+                        <Link
+                            to={`/accounts/view/${paste.user.username}`}>{paste.user.persianUsername || paste.user.username}</Link>
                     </div>
                 </div>
                 <div className="content">
@@ -78,27 +81,34 @@ const ViewPaste = (props) => {
                                     </button>
                                 </div>
                             </div>
-                            <textarea type="text" value={comment} onChange={handleCommentChange}
-                                      placeholder="متن نظر"></textarea>
+
+                            {error ? <div className="error">{error}</div> : <textarea type="text" value={comment} onChange={handleCommentChange}
+                                                                                      placeholder="متن نظر"></textarea>}
                             <div className="submit">
                                 <button type="submit" onClick={async () => {
-                                    const result = await props.fetchCreateComment(paste.paste.id, comment);
-                                    if (result.id) {
-                                        setComments([...comments, {
-                                            user: {
-                                                id: props.user.id,
-                                                username: props.user.username,
-                                                persianUsername: props.user.persianUsername,
-                                                avatar: props.user.avatar
-                                            },
-                                            comment: {
-                                                id: result.id,
-                                                content: comment
-                                            }
-                                        }]);
-                                        setMenu("comments");
+                                    if (comment) {
+                                        const result = await props.fetchCreateComment(paste.paste.id, comment);
+                                        if (result.id) {
+                                            setComments([...comments, {
+                                                user: {
+                                                    id: props.user.id,
+                                                    username: props.user.username,
+                                                    persianUsername: props.user.persianUsername,
+                                                    avatar: props.user.avatar
+                                                },
+                                                comment: {
+                                                    id: result.id,
+                                                    content: comment
+                                                }
+                                            }]);
+                                            setMenu("comments");
+                                        } else if (result.message === "Token is incorrect.") {
+                                            setError("لطفا لاگین کنید")
+                                        }
                                     }
-                                    }}>ثبت نظر</button>
+
+                                }}>ثبت نظر
+                                </button>
                             </div>
                         </form> : <Scrollbar>
                             <div className="new-comment-button">
@@ -115,7 +125,8 @@ const ViewPaste = (props) => {
                                         <img
                                             src={item.user.avatar ? `${props.backend}/avatars/${item.user.avatar}` : "/images/guest.jpg"}
                                             alt={item.user.username}/>
-                                        <h3>{item.user.persianUsername || item.user.username}</h3>
+                                        <Link
+                                            to={`/accounts/view/${item.user.username}`}>{item.user.persianUsername || item.user.username}</Link>
                                     </div>
                                     <div className="comment-content">
                                         {item.comment.content}
@@ -139,7 +150,7 @@ const ViewPaste = (props) => {
                     </div>
                 </div>
                 <div className={`readme markdown-body${props.currentMode === "dark" ? "-dark" : ""}`}
-                     dangerouslySetInnerHTML={{__html: paste.paste.readme}}>
+                     dangerouslySetInnerHTML={{__html: paste.paste.readme || "<p>فاقد فایل کمکی</p>"}}>
                 </div>
             </div>
         );

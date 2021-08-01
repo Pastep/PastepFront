@@ -2,14 +2,17 @@ import PropTypes from "prop-types";
 import HeaderItem from "./HeaderItem";
 import Mode from "../Mode";
 import Loader from "../Loader";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import {useEffect} from "react";
 import "../../styles/header.scss";
 import { useState } from "react";
 
 const Header = (props) => {
-	const [showProfile, setShowProfile] = useState(false);
+	const [redirect, setRedirect] = useState("");
+	const [query, setQuery] = useState("");
 	return (
 		<div className="navbar">
+			{redirect && <Redirect to={redirect}/>}
 			<div className="navbar__navigation navbar__navigation__responsive" style={{display: "none"}}>
 				{props.isLoading ? <Loader /> : <Mode {...props} />}
 				<div className="menu mode-toggle"
@@ -41,10 +44,10 @@ const Header = (props) => {
 					height="50px"
 					src={props.user.avatar ? props.backend + "/avatars/" + props.user.avatar : "/images/guest.jpg"}
 					alt=""
-					onClick={() => setShowProfile(!showProfile)}
+					onClick={() => props.setShowProfile(!props.showProfile)}
 				/>
-				{showProfile && (
-					<div className="profile-dropdown">
+				{props.showProfile && (
+					<div className="profile-dropdown" onClick={() => {props.setShowProfile(false);}}>
                         {props.user.id ? (<div className="profile-dropdown__wrapper">
                             <div className="profile-dropdown__item">
                                 <Link to="/accounts/dashboard">مدریت</Link>
@@ -73,7 +76,10 @@ const Header = (props) => {
 				{/*	<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>*/}
 				{/*	<path d="M13.73 21a2 2 0 0 1-3.46 0"></path>*/}
 				{/*</svg>*/}
-				<div className="features__search">
+				<form onSubmit={(e) => {
+					e.preventDefault();
+					setRedirect(`/pastes/search/${query}`);
+				}} className="features__search">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
 						 stroke="#808080" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
 						 className="feather feather-search">
@@ -81,8 +87,10 @@ const Header = (props) => {
 						<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
 					</svg>
 					{/*<img width="25px" height="25px" src="/images/search.svg" alt="" />*/}
-					<input placeholder="چیزی را تایپ کنید"></input>
-				</div>
+					<input name="query" onChange={(e) => {
+						setQuery(e.target.value);
+					}} value={query} placeholder="چیزی را تایپ کنید"></input>
+				</form>
 			</div>
 		</div>
 	);

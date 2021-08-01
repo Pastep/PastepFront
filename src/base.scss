@@ -102,3 +102,18 @@ body {
     background: var(--scrollbar-bg) !important;
 }
 
+.onScreenError {
+    position: fixed;
+    z-index: 10000000000000;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    background-color: rgba(50,50,50,0.5);
+    .error {
+        font-size: 20px;
+        padding: 20px 50px;
+    }
+}

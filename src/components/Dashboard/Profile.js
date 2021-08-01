@@ -111,12 +111,7 @@ const Profile = (props) => {
 
                 </div>
                 <div className="profile__sections">
-                    <div className="sections__wrapper">
-                        <div className="section section--selected">آخرین پُست ها</div>
-                        <div className="section">معروف ترین پیست ها</div>
-                        <div className="section">دنبال کرده ها</div>
-                        <div className="section">دنبال شوندگان</div>
-                    </div>
+
                     <div className="sections__divider"></div>
                 </div>
                 <div className="profile__pastes">
