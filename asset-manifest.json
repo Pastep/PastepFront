@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/pastepfont/static/css/main.e69f4cf3.chunk.css",
+    "main.js": "/pastepfont/static/js/main.42566f74.chunk.js",
+    "main.js.map": "/pastepfont/static/js/main.42566f74.chunk.js.map",
+    "runtime-main.js": "/pastepfont/static/js/runtime-main.0d4a5a18.js",
+    "runtime-main.js.map": "/pastepfont/static/js/runtime-main.0d4a5a18.js.map",
+    "static/css/2.2f1663e0.chunk.css": "/pastepfont/static/css/2.2f1663e0.chunk.css",
+    "static/js/2.c024906c.chunk.js": "/pastepfont/static/js/2.c024906c.chunk.js",
+    "static/js/2.c024906c.chunk.js.map": "/pastepfont/static/js/2.c024906c.chunk.js.map",
+    "static/js/3.3bd99840.chunk.js": "/pastepfont/static/js/3.3bd99840.chunk.js",
+    "static/js/3.3bd99840.chunk.js.map": "/pastepfont/static/js/3.3bd99840.chunk.js.map",
+    "index.html": "/pastepfont/index.html",
+    "static/css/2.2f1663e0.chunk.css.map": "/pastepfont/static/css/2.2f1663e0.chunk.css.map",
+    "static/css/main.e69f4cf3.chunk.css.map": "/pastepfont/static/css/main.e69f4cf3.chunk.css.map",
+    "static/js/2.c024906c.chunk.js.LICENSE.txt": "/pastepfont/static/js/2.c024906c.chunk.js.LICENSE.txt",
+    "static/media/base.scss": "/pastepfont/static/media/AfrooBold.92853643.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0d4a5a18.js",
+    "static/css/2.2f1663e0.chunk.css",
+    "static/js/2.c024906c.chunk.js",
+    "static/css/main.e69f4cf3.chunk.css",
+    "static/js/main.42566f74.chunk.js"
+  ]
+}
