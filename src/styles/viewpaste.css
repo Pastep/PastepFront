@@ -182,7 +182,7 @@
     color: var(--text);
 }
 .comment-header > a:hover {
-    text-decoration: underline  ;
+    text-decoration: underline;
 }
 
 .comment-header > img {

@@ -92,12 +92,16 @@ const NewPaste = (props) => {
                 body.password = password;
             }
             let result = await props.fetchPasteCreate(body);
-            if (result.message) {
-                body.name = Math.random().toString(36).substring(7);
-                result = await props.fetchPasteCreate(body);
-            }
-            if (result.name) {
-                setRedirect([true, result.name]);
+            if (result.message === "Too many pastes created from this ip.") {
+                alert("RateLimited.");
+            }else {
+                if (result.message) {
+                    body.name = Math.random().toString(36).substring(7);
+                    result = await props.fetchPasteCreate(body);
+                }
+                if (result.name) {
+                    setRedirect([true, result.name]);
+                }
             }
         }
     }

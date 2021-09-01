@@ -256,6 +256,19 @@ function App() {
         setLoading(false);
         return data;
     };
+    const fetchPopularPastes = async ({limit}) => {
+        setLoading(true);
+        let query = `${backend}/pastes/trending?`;
+        if (limit) {
+            query += `&limit=${limit}`;
+        }
+        const result = await fetch(query, {
+            headers: headerOptions
+        });
+        const data = await result.json();
+        setLoading(false);
+        return data;
+    }
     const pasteLikeToggle = async (pasteId) => {
         setLoading(true);
         const res = await fetch(backend + "/pastes/likes/toggle", {
@@ -269,8 +282,27 @@ function App() {
             setError("لطفا لاگین کنید");
             setTimeout(() => {
                 setError("");
-            }, 2000)
+            }, 2000);
+        } else if (data.message === "Too many likes from this ip") {
+            setError("Rate Limited");
+            setTimeout(() => {
+                setError("");
+            }, 2000);
         }
+
+        return data;
+    }
+    const fetchUserTrendingPastes = async ({id, limit}) => {
+        setLoading(true);
+        let query = `${backend}/pastes/trending?user=${id}`;
+        if (limit) {
+            query += `&limit=${limit}`;
+        }
+        const result = await fetch(query, {
+            headers: headerOptions
+        });
+        const data = await result.json();
+        setLoading(false);
         return data;
     }
     const fetchUserPastes = async (id) => {
@@ -429,11 +461,12 @@ function App() {
                     <Profile fetchFollowings={fetchFollowings} currentUser={user} fetchToggleFollow={fetchToggleFollow}
                              fetchFollowers={fetchFollowers}
                              pasteLikeToggle={pasteLikeToggle} currentMode={currentMode} fetchUserData={fetchUserData}
-                             fetchUserPastes={fetchUserPastes} backend={backend}/>
+                             fetchUserPastes={fetchUserPastes} backend={backend}
+                             fetchUserTrendingPastes={fetchUserTrendingPastes}/>
                 </Route>
                 <Route path={["/", "/home", "/index"]}>
                     <Home pasteLikeToggle={pasteLikeToggle} fetchPastes={fetchPastes} currentMode={currentMode}
-                          backend={backend}/>
+                          backend={backend} fetchPopularPastes={fetchPopularPastes}/>
                 </Route>
             </Switch>
         </Router>

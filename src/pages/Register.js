@@ -55,8 +55,15 @@ const Register = (props) => {
                 setError("قبلا این ایمیل یا یوزرنیم استفاده شده است.");
                 document.getElementById("email").style.border = notFilledBorder;
                 document.getElementById("englishUsername").style.border = notFilledBorder;
-            } else if (result.details.length) {
-                setError(result.details[0].message);
+            } else if (result.details && result.details.length) {
+                console.log(result.details[0].context)
+                if (result.details[0].context.label === "password") {
+                    setError("پسورد می بایست بدون هیچ گونه کاراکتر خاصی باشد");
+                } else {
+                    setError("یوزرنیم میبایست بدون هیچ گونه کاراکتر خاصب یاشد")
+                }
+            } else {
+                setError(result.message);
             }
         }
     }

@@ -45,8 +45,13 @@ const Login = (props) => {
                 setError("پسورد اشتباه است");
             } else if (result.message === "Please verify your email.") {
                 setError("لطفا ایمیل خود را وریفای کنید");
-            } else if (result.details.length) {
-                setError(result.details[0].message);
+            } else if (result.details && result.details.length) {
+                console.log(result.details[0].context)
+                if (result.details[0].context.label === "password") {
+                    setError("پسورد می بایست بدون هیچ گونه کاراکتر خاصی باشد");
+                } else {
+                    setError("یوزرنیم میبایست بدون هیچ گونه کاراکتر خاصی یاشد")
+                }
             } else {
                 setError(result.message)
             }

@@ -9,6 +9,7 @@ const Profile = (props) => {
         const [pastes, setPastes] = useState([]);
         const [followers, setFollowers] = useState([]);
         const [followings, setFollowings] = useState([]);
+        const [popularPastes, setPopularPastes] = useState([]);
         const [menu, setMenu] = useState(1);
         const handleMenuChange = (e) => {
             const currentMenu = parseInt(e.target.getAttribute("menu"));
@@ -33,6 +34,8 @@ const Profile = (props) => {
                     setFollowers(result);
                     result = await props.fetchFollowings(fetchedUser.id);
                     setFollowings(result);
+                    result = await props.fetchUserTrendingPastes({id: fetchedUser.id, limit: 25});
+                    setPopularPastes(result);
                 }
 
             }
@@ -100,6 +103,29 @@ const Profile = (props) => {
                     {menu === 1 && <div className="profile__pastes">
                         <div className="pastes__wrapper">
                             {pastes.map((item) => {
+                                let paste = item.paste;
+                                let user = item.user;
+                                let language = item.language;
+                                return <Paste
+                                    key={paste.id}
+                                    id={paste.id}
+                                    {...props}
+                                    userName={user.persianUsername ? user.persianUsername : user.username}
+                                    userLocation={language.persianName}
+                                    profilePic={user.avatar ? `${props.backend}/avatars/${user.avatar}` : "/images/guest.jpg"}
+                                    language={language.slug}
+                                    code={paste.content.length > 150 ? paste.content.substr(0, 150) + "..." : paste.content}
+                                    title={paste.title}
+                                    description={paste.shortDescription ? paste.shortDescription : "فاقد توضیحات"}
+                                    name={paste.name}
+                                    liked={item.liked}
+                                />
+                            })}
+                        </div>
+                    </div>}
+                    {menu === 2 && <div className="profile__pastes">
+                        <div className="pastes__wrapper">
+                            {popularPastes.map((item) => {
                                 let paste = item.paste;
                                 let user = item.user;
                                 let language = item.language;

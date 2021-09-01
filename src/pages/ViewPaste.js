@@ -54,12 +54,16 @@ const ViewPaste = (props) => {
                                 const result = await props.pasteLikeToggle(paste.paste.id);
                                 if (result.message === "successfully disliked paste.") {
                                     setLiked(false);
+                                    setPaste({...paste, likesCount: paste.likesCount-1});
                                 } else if (result.id) {
                                     setLiked(true);
+                                    setPaste({...paste, likesCount: paste.likesCount+1});
                                 }
                             }}
                             alt=""
                         />
+                        <p style={{marginRight: "5px"}}>{paste.likesCount}</p>
+
                     </div>
                     <div className="user">
                         <img

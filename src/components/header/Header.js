@@ -50,7 +50,7 @@ const Header = (props) => {
 					<div className="profile-dropdown" onClick={() => {props.setShowProfile(false);}}>
                         {props.user.id ? (<div className="profile-dropdown__wrapper">
                             <div className="profile-dropdown__item">
-                                <Link to="/accounts/dashboard">مدریت</Link>
+                                <Link to="/accounts/dashboard">مدیریت</Link>
                             </div>
                             <div className="profile-dropdown__item">
                                 <Link to={"/accounts/view/" + props.user.username}>پروفایل</Link>
