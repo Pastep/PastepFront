@@ -88,8 +88,7 @@ function App() {
 	};
 	const fetchLanguages = async () => {
 		setLoading(true);
-		const result = await fetch(`${backend}/languages/all`);
-		const data = await result.json();
+		const { data } = await fetchFunctions.languages();
 		setLoading(false);
 		return data;
 	};
@@ -101,123 +100,65 @@ function App() {
 	};
 	const fetchFollowers = async (user) => {
 		setLoading(true);
-		const result = await fetch(
-			backend + `/accounts/people/followers?user=${user}`
-		);
-		const data = await result.json();
+		const { data } = await fetchFunctions.followers(user);
 		setLoading(false);
 		return data;
 	};
 	const fetchFollowings = async (user) => {
 		setLoading(true);
-		const result = await fetch(
-			backend + `/accounts/people/followings?user=${user}`
-		);
-		const data = await result.json();
+		const { data } = await fetchFunctions.followings(user);
 		setLoading(false);
 		return data;
 	};
 	const fetchToggleFollow = async (target) => {
 		setLoading(true);
-		const result = await fetch(backend + `/accounts/people/toggleFollow`, {
-			method: "POST",
-			headers: headerOptions,
-			body: JSON.stringify({ target: target }),
-		});
-		const data = await result.json();
+		const { data } = await fetchFunctions.toggleFollow(target);
 		setLoading(false);
 		return data;
 	};
 	const deletePaste = async (id) => {
 		setLoading(true);
-		const result = await fetch(backend + "/pastes/delete", {
-			method: "DELETE",
-			headers: headerOptions,
-			body: JSON.stringify({ id: id }),
-		});
-		const data = await result.json();
+		const { data } = await fetchFunctions.deletePaste(id);
 		setLoading(false);
 		return data;
 	};
 	const fetchPaste = async ({ id, name, password, isRaw = false }) => {
 		setLoading(true);
-		const query = id ? `id=${id}` : `name=${name}`;
-		const result = await fetch(
-			backend +
-				`/pastes/read?isRaw=${
-					isRaw ? "yes" : "no"
-				}&password=${password}&${query}`,
-			{
-				method: "GET",
-				headers: headerOptions,
-			}
-		);
-		const data = await result.json();
+		const { data } = await fetchFunctions.paste({ id, name, password, isRaw });
 		setLoading(false);
 		return data;
 	};
-	const fetchUserData = async (body) => {
+	const fetchUserData = async ({ name, value }) => {
 		setLoading(true);
-		const result = await fetch(
-			backend + "/accounts/get?" + body.name + "=" + body.value,
-			{
-				headers: headerOptions,
-			}
-		);
-		const data = await result.json();
+		const { data } = await fetchFunctions.user({ name, value });
 		setLoading(false);
 		return data;
 	};
 	const fetchPasteCreate = async (body) => {
 		setLoading(true);
-		const result = await fetch(backend + "/pastes/create", {
-			method: "POST",
-			headers: headerOptions,
-			body: JSON.stringify(body),
-		});
-		const data = await result.json();
+		const { data } = await fetchFunctions.createPaste(body);
 		setLoading(false);
 		return data;
 	};
 	const fetchAvatarUpdate = async (file) => {
 		setLoading(true);
-		const formData = new FormData();
-		formData.append("avatar", file, "profile.png");
-		const result = await fetch(backend + "/accounts/avatar", {
-			method: "POST",
-			headers: {
-				Authorization: "Bearer " + token,
-			},
-			body: formData,
-		});
-		const data = await result.json();
+		const { data } = fetchFunctions.avatarUpdate(file);
 		return data;
 	};
 	const fetchUserUpdate = async (body) => {
 		setLoading(true);
-		const res = await fetch(backend + "/accounts/update", {
-			method: "PUT",
-			headers: headerOptions,
-			body: JSON.stringify(body),
-		});
-		const data = await res.json();
+		const { data } = await fetchFunctions.userUpdate(body);
 		setLoading(false);
 		return data;
 	};
 	const fetchRegister = async (username, persianUsername, email, password) => {
 		setLoading(true);
-		const body = {
-			username: username,
-			persianUsername: persianUsername,
-			email: email,
-			password: password,
-		};
-		const res = await fetch(backend + "/accounts/create", {
-			method: "POST",
-			headers: headerOptions,
-			body: JSON.stringify(body),
+		const { data } = await fetchFunctions.register({
+			username,
+			persianUsername,
+			email,
+			password,
 		});
-		const data = await res.json();
 		setLoading(false);
 		return data;
 	};
@@ -229,49 +170,25 @@ function App() {
 		user,
 	}) => {
 		setLoading(true);
-		let query = backend + "/pastes/search?title=" + title;
-		if (limit) {
-			query += "&limit=" + limit;
-		}
-		if (shuffle) {
-			query += "&shuffle=yes&";
-		}
-		if (latest) {
-			query += "&latest=yes&";
-		}
-		if (user) {
-			query += "&user=" + user;
-		}
-		const res = await fetch(query, {
-			headers: headerOptions,
+		const { data } = await fetchFunctions.searchPaste({
+			limit,
+			shuffle,
+			latest,
+			title,
+			user,
 		});
-		const data = await res.json();
 		setLoading(false);
 		return data;
 	};
 	const fetchPastes = async ({ limit, shuffle = "no", latest = "no" }) => {
 		setLoading(true);
-		const res = await fetch(
-			backend +
-				`/pastes/all?limit=${limit}&shuffle=${shuffle}&latest=${latest}`,
-			{
-				headers: headerOptions,
-			}
-		);
-		const data = await res.json();
+		const { data } = await fetchFunctions.pastes({ limit, shuffle, latest });
 		setLoading(false);
 		return data;
 	};
 	const fetchPopularPastes = async ({ limit }) => {
 		setLoading(true);
-		let query = `${backend}/pastes/trending?`;
-		if (limit) {
-			query += `&limit=${limit}`;
-		}
-		const result = await fetch(query, {
-			headers: headerOptions,
-		});
-		const data = await result.json();
+		const { data } = await fetchFunctions.trendingPastes(limit);
 		setLoading(false);
 		return data;
 	};
