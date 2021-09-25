@@ -60,9 +60,15 @@ class FetchRoutes {
 			user,
 		})}`;
 	};
+	likeToggle = () => {
+		return `${this.backend}/pastes/likes/toggle`;
+	};
 	// User
 	user = ({ name, value }) => {
 		return `${this.backend}/accounts/get?${name}=${value}`;
+	};
+	userToken = (token) => {
+		return `${this.backend}/accounts/get?${this.query({ token })}`;
 	};
 	followers = (user) => {
 		return `${this.backend}/accounts/people/followers?${this.query({ user })}`;
@@ -81,6 +87,18 @@ class FetchRoutes {
 	};
 	register = () => {
 		return `${this.backend}/accounts/create`;
+	};
+	userTrendingPastes = ({ id, limit }) => {
+		return `${this.backend}/pastes/trending?${this.query({
+			user: id,
+			limit: limit,
+		})}`;
+	};
+	userPastes = (id) => {
+		return `${this.backend}/pastes/all?${this.query({ user: id })}`;
+	};
+	login = () => {
+		return `${this.backend}/accounts/login`;
 	};
 	// Language
 	languages = () => {
