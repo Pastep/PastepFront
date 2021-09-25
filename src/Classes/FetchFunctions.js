@@ -171,5 +171,41 @@ class FetchFunctions {
 		});
 		return result;
 	};
+	likeToggle = async (pasteId) => {
+		const result = await this.fetch({
+			url: this.fetchRoutes.likeToggle(),
+			method: "POST",
+			body: {
+				paste: pasteId,
+			},
+		});
+		return result;
+	};
+	userTrendingPastes = async ({ id, limit }) => {
+		const result = await this.fetch({
+			url: this.fetchRoutes.userTrendingPastes({ id, limit }),
+		});
+		return result;
+	};
+	userPastes = async (id) => {
+		const result = await this.fetch({
+			url: this.fetchRoutes.userPastes(id),
+		});
+		return result;
+	};
+	login = async (body) => {
+		const result = await this.fetch({
+			url: this.fetchRoutes.login(),
+			body: body,
+			method: "POST",
+		});
+		return result;
+	};
+	userToken = async (token) => {
+		const result = await this.fetch({
+			url: this.fetchRoutes.userToken(token),
+		});
+		return result;
+	};
 }
 export default FetchFunctions;
