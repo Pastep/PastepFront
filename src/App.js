@@ -52,13 +52,9 @@ function App() {
 	};
 	const [user, setUser] = useState({});
 	fetchFunctions.defaultHeaders.Authorization = `Bearer ${token}`;
-	const headerOptions = {
-		Authorization: "Bearer " + token,
-		"Content-Type": "application/json",
-	};
 	const fetchCreateComment = async (paste, content) => {
 		setLoading(true);
-		const { data } = fetchFunctions.createComment({ paste, content });
+		const { data } = await fetchFunctions.createComment({ paste, content });
 		setLoading(false);
 		if (data.message === "Token is incorrect.") {
 			setError("لطفا لاگین کنید");
@@ -194,12 +190,7 @@ function App() {
 	};
 	const pasteLikeToggle = async (pasteId) => {
 		setLoading(true);
-		const res = await fetch(backend + "/pastes/likes/toggle", {
-			method: "POST",
-			headers: headerOptions,
-			body: JSON.stringify({ paste: pasteId }),
-		});
-		const data = await res.json();
+		const { data } = await fetchFunctions.likeToggle(pasteId);
 		setLoading(false);
 		if (data.message === "Token is incorrect.") {
 			setError("لطفا لاگین کنید");
@@ -212,34 +203,23 @@ function App() {
 				setError("");
 			}, 2000);
 		}
-
 		return data;
 	};
 	const fetchUserTrendingPastes = async ({ id, limit }) => {
 		setLoading(true);
-		let query = `${backend}/pastes/trending?user=${id}`;
-		if (limit) {
-			query += `&limit=${limit}`;
-		}
-		const result = await fetch(query, {
-			headers: headerOptions,
-		});
-		const data = await result.json();
+		const { data } = await fetchFunctions.userTrendingPastes({ id, limit });
 		setLoading(false);
 		return data;
 	};
 	const fetchUserPastes = async (id) => {
 		setLoading(true);
-		const res = await fetch(backend + "/pastes/all?user=" + id, {
-			headers: headerOptions,
-		});
-		const data = await res.json();
+		const { data } = await fetchFunctions.userPastes(id);
 		setLoading(false);
 		return data;
 	};
 	const fetchLogin = async (username, password) => {
 		setLoading(true);
-		let body = {
+		const body = {
 			password: password,
 		};
 		if (
@@ -249,24 +229,15 @@ function App() {
 		} else {
 			body.username = username;
 		}
-		const res = await fetch(backend + "/accounts/login", {
-			method: "POST",
-			headers: headerOptions,
-			body: JSON.stringify(body),
-		});
-		const data = await res.json();
+		const { data } = await fetchFunctions.login(body);
 		setLoading(false);
 		return data;
 	};
 	const fetchUser = async () => {
 		setLoading(true);
-		const res = await fetch(
-			backend + "/accounts/get?token=" + localStorage.getItem("token"),
-			{
-				method: "GET",
-			}
+		const { data } = await fetchFunctions.userToken(
+			localStorage.getItem("token")
 		);
-		const data = await res.json();
 		setLoading(false);
 		return data;
 	};
@@ -311,11 +282,11 @@ function App() {
 			getUser();
 		}
 	}, []);
-	const responsiveMenuItemClick = (e) => {
-		const menu = document.querySelector(".menu-responsive");
-		menu.style.left = "100%";
-		window.location.href = e.target.getAttribute("to");
-	};
+	// const responsiveMenuItemClick = (e) => {
+	// 	const menu = document.querySelector(".menu-responsive");
+	// 	menu.style.left = "100%";
+	// 	window.location.href = e.target.getAttribute("to");
+	// };
 
 	return (
 		<Router>
@@ -351,7 +322,6 @@ function App() {
 						backend={backend}
 						pasteLikeToggle={pasteLikeToggle}
 						currentMode={currentMode}
-						backend={backend}
 					/>
 				</Route>
 				<Route path="/pastes/edit/:id">
