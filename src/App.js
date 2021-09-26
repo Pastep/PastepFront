@@ -407,6 +407,7 @@ function App() {
 				</Route>
 				<Route path={["/", "/home", "/index"]}>
 					<Home
+						token={token}
 						pasteLikeToggle={pasteLikeToggle}
 						fetchPastes={fetchPastes}
 						currentMode={currentMode}
