@@ -1,225 +1,241 @@
 .viewpaste {
-    padding: 20px 40px;
-    color: var(--text);
-    width: 100%;
+	padding: 20px 40px;
+	color: var(--text);
+	width: 100%;
 }
 
 .viewpaste_header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 25px;
 }
 
 .viewpaste_header > div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row-reverse;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row-reverse;
 }
 
 .viewpaste_header > .user > img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+	margin-right: 10px;
 }
 .viewpaste_header > .user > a {
-    text-decoration: none;
-    font-size: 25px;
-    color: var(--text);
+	text-decoration: none;
+	font-size: 25px;
+	color: var(--text);
 }
 .viewpaste_header > .user > a:hover {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 .viewpaste_header > div > h1 {
-    font-size: 25px;
+	font-size: 25px;
 }
 
 .content {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 25px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 25px;
 }
 
 .comments {
-    direction: rtl;
-    padding: 20px;
-    background-color: var(--code-background);
-    box-shadow: 0px 4px 23px 4px var(--profile-drop-down-background-shadow);
-    transition: 0.5s;
-    border-radius: 25px;
-    width: 32%;
-    height: 300px;
+	direction: rtl;
+	padding: 20px;
+	background-color: var(--code-background);
+	box-shadow: 0px 4px 23px 4px var(--profile-drop-down-background-shadow);
+	transition: 0.5s;
+	border-radius: 25px;
+	width: 32%;
+	height: 300px;
 }
 
 .comments > form {
 }
 
 .new-comment-button {
-    position: absolute;
-    top: 0;
-    left: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 .new-comment-button > .submit > button {
-    padding: 5px 10px !important;
+	padding: 5px 10px !important;
 }
 
 .ScrollbarsCustom-Content > .new-comment-button {
-    margin-bottom: 15px;
-    padding: 0 10px;
+	margin-bottom: 15px;
+	padding: 0 10px;
 }
 .ScrollbarsCustom-Content > .comment {
-    margin-bottom: 15px;
-    padding: 0 10px;
+	margin-bottom: 15px;
+	padding: 0 10px;
 }
 
 .comments > form > h1 {
-    font-size: 25px;
-    margin-bottom: 10px;
+	font-size: 25px;
+	margin-bottom: 10px;
 }
 
 .comments > form > textarea {
-    display: flex;
-    outline: none;
-    border: 1px solid var(--code-background);
-    background-color: var(--profile-drop-down-background);
-    color: var(--text);
-    box-shadow: var(--profile-drop-down-background-shadow) 0px 7px 29px 0px;
-    width: 100%;
-    padding: 10px 15px;
-    border-radius: 10px;
-    font-size: 16px;
-    margin-bottom: 15px;
-    resize: none;
-    height: 135px;
-    transition: 0.5s;
+	display: flex;
+	outline: none;
+	border: 1px solid var(--code-background);
+	background-color: var(--profile-drop-down-background);
+	color: var(--text);
+	box-shadow: var(--profile-drop-down-background-shadow) 0px 7px 29px 0px;
+	width: 100%;
+	padding: 10px 15px;
+	border-radius: 10px;
+	font-size: 16px;
+	margin-bottom: 15px;
+	resize: none;
+	height: 135px;
+	transition: 0.5s;
 }
 
 .content > .code {
-    direction: ltr;
-    background-color: var(--code-background);
-    box-shadow: 0px 4px 23px 4px var(--profile-drop-down-background-shadow);
-    transition: 0.5s;
-    border-radius: 25px;
-    width: 65%;
-    height: 300px;
-
+	direction: ltr;
+	background-color: var(--code-background);
+	box-shadow: 0px 4px 23px 4px var(--profile-drop-down-background-shadow);
+	transition: 0.5s;
+	border-radius: 25px;
+	width: 65%;
+	height: 300px;
 }
 
 .content > .code * {
-    font-family: "Roboto Mono" !important;
-    font-size: 13px;
+	font-family: "Roboto Mono" !important;
+	font-size: 13px;
 }
 
 .code__wrapper {
-    padding: 20px;
-    display: flex;
-    height: 100%;
+	padding: 20px;
+	display: flex;
+	height: 100%;
 }
 
 .code__wrapper2 {
-    height: 100%;
-    background-color: transparent !important;
+	height: 100%;
+	background-color: transparent !important;
 }
 
-
 .paste_header {
-    flex-direction: row !important;
-    align-items: center;
+	flex-direction: row !important;
+	align-items: center;
 }
 
 .paste_header > h1 {
-    margin-left: 10px;
+	margin-left: 10px;
 }
 
 .paste_header > img {
-    cursor: pointer;
-    transition: all 0.115s;
-    stroke: var(--text);
+	cursor: pointer;
+	transition: all 0.115s;
+	stroke: var(--text);
 }
 
 .paste_header > img:hover {
-    transform: scale(1.1);
+	transform: scale(1.1);
 }
 
 .paste_header > img:active {
-    transform: scale(1);
+	transform: scale(1);
 }
 
 .readme {
-    direction: ltr !important;
-    padding: 20px;
-    background-color: var(--code-background);
-    box-shadow: 0px 4px 23px 4px var(--profile-drop-down-background-shadow);
-    transition: 0.5s;
-    border-radius: 25px;
+	direction: ltr !important;
+	padding: 20px;
+	background-color: var(--code-background);
+	box-shadow: 0px 4px 23px 4px var(--profile-drop-down-background-shadow);
+	transition: 0.5s;
+	border-radius: 25px;
 }
 
 .new-comment-header {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .new-comment-header > h1 {
-    width: 80%;
+	width: 80%;
 }
 
 .comment-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
 }
 
 .comment-header > a {
-    font-size: 20px;
-    text-decoration: none;
-    color: var(--text);
+	font-size: 20px;
+	text-decoration: none;
+	color: var(--text);
 }
 .comment-header > a:hover {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 .comment-header > img {
-    border-radius: 50%;
-    height: 35px;
-    width: 35px;
-    margin-left: 10px;
+	border-radius: 50%;
+	height: 35px;
+	width: 35px;
+	margin-left: 10px;
 }
 
 .comment-content {
-    background-color: var(--profile-drop-down-background);
-    color: var(--text);
-    /*box-shadow: var(--profile-drop-down-background-shadow) 0px 3px 8px;*/
-    box-shadow: var(--profile-drop-down-background-shadow) 0px 7px 29px 0px;
-    width: 100%;
-    padding: 10px 15px;
-    border-radius: 10px;
-    font-size: 16px;
-    margin-bottom: 15px;
-    resize: none;
-    transition: 0.5s;
+	background-color: var(--profile-drop-down-background);
+	color: var(--text);
+	/*box-shadow: var(--profile-drop-down-background-shadow) 0px 3px 8px;*/
+	box-shadow: var(--profile-drop-down-background-shadow) 0px 7px 29px 0px;
+	width: 100%;
+	padding: 10px 15px;
+	border-radius: 10px;
+	font-size: 16px;
+	margin-bottom: 15px;
+	resize: none;
+	transition: 0.5s;
 }
 
-
 .CodeMirror * {
-    font-family: 'Roboto Mono' !important;
-    font-size: 17px;
+	font-family: "Roboto Mono" !important;
+	font-size: 17px;
 }
 
 .CodeMirror {
-    box-shadow: var(--profile-drop-down-background-shadow) 0px 7px 29px 0px !important;
-    padding: 10px;
-    border-radius: 25px;
-    margin-bottom: 50px;
+	box-shadow: var(--profile-drop-down-background-shadow) 0px 7px 29px 0px !important;
+	padding: 10px;
+	border-radius: 25px;
+	margin-bottom: 50px;
 }
 
+.cm-s-ayu-mirage.CodeMirror,
+.cm-s-ayu-mirage .CodeMirror-gutters {
+	background-color: var(--code-background) !important;
+}
 
-.cm-s-ayu-mirage.CodeMirror,.cm-s-ayu-mirage .CodeMirror-gutters {
-    background-color: var(--code-background) !important;
+.paste-password {
+	background-color: var(--code-background);
+	box-shadow: 0px 4px 23px 4px var(--profile-drop-down-background-shadow);
+	transition: 0.5s;
+	border-radius: 18px;
+	width: 50%;
+	padding: 20px;
+}
+.view-paste-errors {
+	padding-top: 100px;
+	display: flex;
+	width: 100%;
+	justify-content: center;
+}
+
+.paste-password > p {
+	margin-bottom: 15px;
 }

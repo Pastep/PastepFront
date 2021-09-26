@@ -8,7 +8,6 @@ import Header from "./components/header/Header";
 import ResponsiveMenu from "./components/ResponsiveMenu";
 // Pages
 import Home from "./pages/Home";
-import BestRating from "./pages/BestRating";
 import Team from "./pages/Team";
 import Profile from "./pages/Profile";
 import NewPaste from "./pages/NewPaste";
@@ -120,9 +119,9 @@ function App() {
 	};
 	const fetchPaste = async ({ id, name, password, isRaw = false }) => {
 		setLoading(true);
-		const { data } = await fetchFunctions.paste({ id, name, password, isRaw });
+		const result = await fetchFunctions.paste({ id, name, password, isRaw });
 		setLoading(false);
-		return data;
+		return result;
 	};
 	const fetchUserData = async ({ name, value }) => {
 		setLoading(true);
@@ -309,9 +308,6 @@ function App() {
 				setShowProfile={setShowProfile}
 			/>
 			<Switch>
-				<Route path={["/best-rating", "/bestrating"]} exact>
-					<BestRating />
-				</Route>
 				<Route path={["/team", "/about", "/aboutus"]}>
 					<Team />
 				</Route>

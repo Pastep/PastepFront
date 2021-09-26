@@ -26,6 +26,7 @@ const Home = (props) => {
 				setPastes(
 					Array.from(await props.fetchPastes({ limit: 25, latest: "yes" }))
 				);
+				setLoading(false);
 				setRandomPastes(
 					Array.from(await props.fetchPastes({ limit: 25, shuffle: "yes" }))
 				);
