@@ -1,6 +1,6 @@
 import "../styles/team.scss";
-
-const Team = () => {
+import TeamMember from "../components/TeamMember";
+const Team = (props) => {
 	return (
 		<div className="team">
 			<div className="team__wrapper">
@@ -15,11 +15,32 @@ const Team = () => {
 				</div>
 				<div className="team__sections">
 					<div className="sections__wrapper">
-						<div className="section section--selected">پروژه های ما</div>
+						<div className="section section--selected">افراد تیم ما</div>
+						<div className="section">پروژه های ما</div>
 						<div className="section">نمونه کار ها</div>
-						<div className="section">افراد تیم ما</div>
 					</div>
 					<div className="sections__divider"></div>
+					<div className="team-members">
+						<TeamMember
+							{...props}
+							username="moorkiplier"
+							discord="828484542746460220"
+							description="Pastep is pastep"
+							role="فرانت اند"
+						></TeamMember>
+						<TeamMember
+							{...props}
+							role="فرانت اند"
+							username="MuffinPlayz"
+							discord="416932883882573844"
+						></TeamMember>
+						<TeamMember
+							{...props}
+							username="pooria"
+							discord="770212812785844264"
+							role="بک اند و فرانت اند"
+						></TeamMember>
+					</div>
 				</div>
 			</div>
 		</div>

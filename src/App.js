@@ -32,7 +32,6 @@ const fetchFunctions = new FetchFunctions({
 	},
 	fetchRoutes: fetchRoutes,
 });
-global.fetchFunction = fetchFunctions;
 function App() {
 	const [isLoading, setLoading] = useState(false);
 	const [menu, setMenu] = useState(false);
@@ -309,7 +308,7 @@ function App() {
 			/>
 			<Switch>
 				<Route path={["/team", "/about", "/aboutus"]}>
-					<Team />
+					<Team fetchFunctions={fetchFunctions} />
 				</Route>
 
 				<Route path="/pastes/search/:title">

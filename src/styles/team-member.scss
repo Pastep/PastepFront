@@ -1,0 +1,76 @@
+.team-member {
+	border-radius: 20px;
+	padding: 20px;
+	margin-bottom: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	div {
+		&.loading {
+			width: 128px !important;
+			height: 128px !important;
+			border-radius: 50%;
+			margin-bottom: 10px;
+		}
+	}
+	img {
+		border-radius: 50%;
+		width: 128px !important;
+		height: 128px !important;
+		margin-bottom: 10px;
+	}
+	p {
+		&.loading {
+			width: 90% !important;
+			height: 20px !important;
+		}
+		margin-bottom: 10px;
+	}
+	h1 {
+		&.loading {
+			width: 90% !important;
+			height: 20px !important;
+			margin-bottom: 10px;
+		}
+	}
+	.social-medias {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		a {
+			width: 90%;
+			margin-bottom: 10px;
+		}
+	}
+}
+@keyframes loading {
+	0% {
+		background-color: var(--loadingImage0);
+	}
+	100% {
+		background-color: var(--loadingImage100);
+	}
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	&.loading {
+		border-radius: 5px;
+	}
+}
+
+*.loading {
+	animation-name: loading;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+	animation-play-state: running;
+	animation-fill-mode: forwards;
+	animation-duration: 1s;
+}
